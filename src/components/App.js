@@ -15,20 +15,20 @@ function App() {
         />
       </a>
 
-      <nav className="menu header__menu">
+      <div className="menu header__menu">
+        <nav>
+          <ul className="film-nav menu__film">
+            <li><a href="https://yandex.ru/pogoda" className="film-nav__link">Фильмы</a></li>
+            <li><a href="https://yandex.ru/pogoda" className="film-nav__link">Сохраненные фильмы</a></li>
+          </ul>
+        </nav>
 
-        <ul className="film-nav menu__film">
+        <nav className="auth-nav menu__auth">
+          <a className="auth-nav__reg">Регистрация</a>
+          <button className="auth-nav__acc auth-nav__acc" type="button"></button>
+        </nav>
 
-          <li><a href="https://yandex.ru/pogoda" className="film-nav__link">Регистрация</a></li>
-          <li className="film-nav__link"></li>
-        </ul>
-
-        <ul className="auth-nav menu__auth">
-          <li className="auth-nav__reg"></li>
-          <li className="auth-nav__acc auth-nav__acc"></li>
-        </ul>
-
-      </nav>
+      </div>
 
     </header>
   );
