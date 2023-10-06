@@ -1,0 +1,150 @@
+.header {
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.header__content {
+  display: flex;
+  padding: 18px 70px;
+}
+
+.header__logo {
+  display: block;
+  width: 38px;
+  margin: 0;
+  padding: 0;
+  outline: 1px red solid;
+}
+
+@media screen and (max-width: 600px)  {
+  .header__logo {
+    width: 104px;
+  }
+}
+
+.menu {
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.header__menu{
+  outline: solid 1px white;
+  margin: auto 0 auto 45px
+  /* min-width: 100%; */
+}
+
+@media screen and (max-width: 1050px)  {
+  .page__header  {
+    max-width: 580px;
+  }
+}
+
+@media screen and (max-width: 650px)  {
+  .page__header  {
+    max-width: 100%;
+    margin: 28px auto 42px;
+    padding-bottom: 32px;
+    padding-left: calc(((100% - 282px)/2) + 8px);
+  }
+}
+
+
+.menu__film {
+  list-style-type: none;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+.menu__link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.menu__link:hover {
+  opacity: 0.6;
+}
+
+
+.auth {
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.header__auth {
+  margin: auto 0 auto auto;
+}
+
+.auth__reg {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+  margin-right: 30px;
+}
+
+.auth__reg:hover {
+  opacity: 0.6;
+}
+.auth__login {
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 76px;
+  height: 32px;
+  color: black;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  background-color: #3DDC84;
+}
+
+.auth__login:hover {
+  opacity: 0.6;
+}
+
+.auth__profile {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  width: 100px;
+  height: 32px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 12px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: none;
+}
+.auth__profile:hover {
+  opacity: 0.6;
+}
+
+.auth__img{
+  display: block;
+  background-color: #0F4157;
+  border-radius: 50%;
+  padding: 8px;
+  margin-right: 3px;
+  margin-left: 7px;
+  width: 10px;
+  height: 10px;
+}

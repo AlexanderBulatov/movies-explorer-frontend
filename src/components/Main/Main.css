@@ -1,0 +1,368 @@
+/* -------------PROMO ----------------- */
+
+.promo{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.promo__content {
+  background-image: url('../../images/promo.svg');
+  background-size: 320px 320px;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 184px 70px 224px;
+}
+.promo__title{
+  max-width: 730px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0;
+}
+
+
+/* -------------NAVTAB ----------------- */
+
+
+.nav-tab {
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.nav-tab__content{
+  padding: 24px 70px;
+}
+
+.nav-tab__links {
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  padding: 0;
+}
+
+.nav-tab__link{
+  text-decoration: underline;
+  color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.nav-tab__link:hover {
+  opacity: 0.6;
+}
+
+/* -------------ABOUT PROJECT ----------------- */
+.about-project{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+.about-project__content{
+  padding: 110px 70px;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -.04em;
+
+}
+
+
+.subtitle{
+  padding-bottom: 23px;
+  border-bottom: 1px solid #dadada;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+}
+.about-project__subtitle{
+  margin: 0;
+}
+
+.about-project__facts{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 110px;
+}
+
+.facts{
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.facts__fact{
+  flex: 0 1 50%;
+}
+
+.facts__title{
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0 0 26px 0;
+}
+.description{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+
+}
+.facts__description{
+  margin: 0;
+  padding: 0;
+}
+
+/* ----------------- */
+.chart{
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.about-project__chart{
+  display: flex;
+  flex-direction: row;
+}
+
+.chart__term{
+  flex: 0 1 20%;
+}
+
+.chart__term_ext{
+  flex: 0 1 80%;
+}
+
+.chart__time{
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0;
+  padding: 9px 0 9px 0;
+  background-color: #303030;
+
+}
+.chart__time_light:first-of-type {
+  color: #000;
+  background-color: #3DDC84;
+}
+
+/* .chart__time_light{
+
+} */
+.chart__phase{
+  color: #8B8B8B;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0;
+  padding-top: 18px;
+}
+
+/* --------- techs ------------*/
+
+.techs{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+
+.techs__content{
+  padding: 0 70px;
+}
+
+.techs__subtitle{
+  margin: 0;
+}
+
+.techs__title{
+  padding-top: 90px;
+  outline: 1px rgb(0, 255, 157) solid;
+  text-align: center;
+}
+
+.techs__description{
+  padding-top: 26px;
+  outline: 1px rgb(0, 255, 157) solid;
+  max-width: 460px;
+  margin: 0 auto;
+  text-align: center;
+  letter-spacing: -.04em;
+}
+.techs__stack{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+  list-style-type: none;
+  text-decoration: none;
+  outline: 1px red solid;
+}
+.techs__technology{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -.04em;
+  background-color: #303030;
+  outline: 1px solid green;
+  min-width: 90px;
+  padding-top: 21px;
+  padding-bottom: 22px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* ----- AboutMe ---- */
+.about-me{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+.about-me__content{
+  padding: 110px 70px 0;;
+}
+
+.about-me__subtitle{
+  margin: 0;
+}
+
+.about-me__resume{
+
+  padding-top: 66px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.about-me__info{
+  outline: 1px green solid;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.about-me__name {
+  margin: 0;
+}
+.about-me__job-title {
+  padding-top: 18px;
+  margin: 0;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+}
+.about-me__summary {
+  padding-top: 26px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.about-me__github {
+  display: block;
+  /* align-self:flex-end; */
+  /* justify-self: flex-end; */
+  text-decoration: none;
+  margin-top: auto;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.about-me__foto{
+  outline: greenyellow 1px solid;
+  padding-left: 50px;
+
+}
+.about-me__img{
+  margin: 0 auto;
+  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+  max-width: 270px;
+  max-height: 327px;
+}
+
+/* ----- Portfolio ---- */
+.portfolio{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.portfolio__content{
+  padding: 101px 70px 125px;;
+}
+
+.portfolio__title{
+  color: #8b8b8b;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.projects{
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.portfolio__projects{
+  display: block;
+  padding-top: 20px;
+}
+
+.projects__sample{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border-bottom: 1px solid #424242;
+  padding-top: 20px;
+  padding-bottom: 19px;
+}
+
+.projects__sample:last-child{
+  border-bottom: none;
+
+}
+
+.projects__title{
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -.04em;
+}
+
+.projects__link{
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -.04em;
+}
+
+/* ----- FOOTER ---- */
