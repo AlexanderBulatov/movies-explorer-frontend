@@ -11,7 +11,8 @@
   /* background-color: #073042; */
   font-family: 'Inter', Arial, sans-serif;
   font-weight: 400;
-  padding: 79px 70px 20px;;
+  padding: 79px 70px 20px;
+  outline: 1px red solid;
 }
 .footer__title{
   margin: 0;

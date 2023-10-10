@@ -9,8 +9,10 @@
   display: flex;
   padding: 18px 70px;
 }
-
-.header__logo {
+.logo {
+  display: block;
+}
+.logo__img {
   display: block;
   width: 38px;
   margin: 0;
@@ -147,4 +149,9 @@
   margin-left: 7px;
   width: 10px;
   height: 10px;
+}
+
+.auth__img_dark{
+  background-color: #313131;
+
 }

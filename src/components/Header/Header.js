@@ -11,7 +11,7 @@ function Header() {
         <img
           src={logo}
           alt="Пиктограмма со ссылкой на главную страницу"
-          className="header__logo"
+          className="logo__img"
         />
       </a>
       <nav className="menu header__menu">
