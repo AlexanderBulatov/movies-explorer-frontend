@@ -18,7 +18,7 @@ function AboutMe() {
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
             </p>
-            <a href="#" className="about-me__github">GitHub</a>
+            <a href="#" className="about-me__github">Github</a>
           </div>
           <div className="about-me__foto">
             <img

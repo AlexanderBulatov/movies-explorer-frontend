@@ -8,25 +8,52 @@
   font-weight: 400;
 }
 
-.nav-tab__content{
-  padding: 24px 70px;
+.nav-tab__content {
+  padding: 25px 70px;
+  /* margin: 0 auto;
+  max-width: 1140px;
+  width: calc(100% - 70px * 2); */
 }
+
+@media screen and (max-width: 450px) {
+  .nav-tab__content {
+    /* max-width: 710px;
+    width: calc(100% - 50px * 2);
+    padding: 90px 0px 0px; */
+    padding: 25px 25px;
+
+  }
+}
+
 
 .nav-tab__links {
   margin: 0;
+  padding: 0;
   list-style-type: none;
   text-decoration: none;
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 40px;
-  padding: 0;
-}
 
+}
+@media screen and (max-width: 450px) {
+  .nav-tab__links {
+    gap: 24px;
+
+  }
+}
 .nav-tab__link{
+  display: block;
   text-decoration: underline;
   color: #fff;
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
+}
+
+@media screen and (max-width: 450px) {
+  .nav-tab__link {
+    font-size: 11px;
+  }
 }
