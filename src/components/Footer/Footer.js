@@ -7,11 +7,11 @@ function Footer() {
       <div className="footer__content page__content">
         <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
         <div className="footer__info">
-          <p className="footer__copyright">&copy;2023 | Alexander B</p>
+          <p className="footer__copyright">&copy; 2023 | Alexander B</p>
           <nav>
             <ul className="footer__list">
-              <li><a href="https://yandex.ru/" className="footer__link" target="_blank" rel="noreferrer">Яндекс.Практикум</a></li>
-              <li><a href="https://github.com/AlexanderBulatov" className="footer__link" target="_blank" rel="noreferrer">Github</a></li>
+              <li><a href="https://yandex.ru/" className="link footer__link" target="_blank" rel="noreferrer">Яндекс.Практикум</a></li>
+              <li><a href="https://github.com/AlexanderBulatov" className="link footer__link" target="_blank" rel="noreferrer">Github</a></li>
             </ul>
           </nav>
         </div>

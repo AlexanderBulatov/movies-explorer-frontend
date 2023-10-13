@@ -12,7 +12,6 @@
   box-sizing: border-box;
   max-width: 1280px;
   margin: 0 auto;
-  outline: 1px solid rgb(105, 161, 32);
 }
 
 .page__partition_color_turquoise {
@@ -44,7 +43,6 @@
   width: 38px;
   margin: 0;
   padding: 0;
-  outline: 1px red solid;
 }
 
 @media screen and (max-width: 600px)  {
@@ -61,7 +59,6 @@
 }
 
 .header__menu{
-  outline: solid 1px white;
   margin: auto 0 auto 45px
   /* min-width: 100%; */
 }
@@ -367,13 +364,13 @@
 
 .techs__title{
   padding-top: 90px;
-  outline: 1px rgb(0, 255, 157) solid;
+
   text-align: center;
 }
 
 .techs__description{
   padding-top: 26px;
-  outline: 1px rgb(0, 255, 157) solid;
+
   max-width: 460px;
   margin: 0 auto;
   text-align: center;
@@ -387,7 +384,7 @@
   gap: 10px;
   list-style-type: none;
   text-decoration: none;
-  outline: 1px red solid;
+
 }
 .techs__technology{
   font-weight: 400;
@@ -395,7 +392,6 @@
   line-height: 17px;
   letter-spacing: -.04em;
   background-color: #303030;
-  outline: 1px solid green;
   min-width: 90px;
   padding-top: 21px;
   padding-bottom: 22px;
@@ -427,7 +423,6 @@
   justify-content: space-between;
 }
 .about-me__info{
-  outline: 1px green solid;
   max-width: 600px;
   display: flex;
   flex-direction: column;
@@ -466,7 +461,6 @@
 }
 
 .about-me__foto{
-  outline: greenyellow 1px solid;
   padding-left: 50px;
 
 }

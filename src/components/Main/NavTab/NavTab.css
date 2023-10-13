@@ -1,0 +1,32 @@
+/* -------------NAVTAB ----------------- */
+
+
+.nav-tab {
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.nav-tab__content{
+  padding: 24px 70px;
+}
+
+.nav-tab__links {
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  padding: 0;
+}
+
+.nav-tab__link{
+  text-decoration: underline;
+  color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}

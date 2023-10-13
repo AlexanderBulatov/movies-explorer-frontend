@@ -1,0 +1,45 @@
+/* -------------PROMO ----------------- */
+
+.promo{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.promo__content {
+  padding: 82px 0px 122px;
+  margin: 0 auto;
+  max-width: 1140px;
+  width: calc(100% - 70px * 2);
+}
+
+@media screen and (max-width: 850px) {
+  .promo__content {
+    padding: 224px 0px 240px;
+    max-width: 710px;
+    width: calc(100% - 19px * 2);
+  }
+}
+
+
+.promo__title-wrapper{
+  background-image: url('../../../images/promo.svg');
+  background-size: 320px 320px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  min-height: 320px;
+  max-width: 730px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+}
+.promo__title{
+  text-align: center;
+  display: block;
+  margin: 0;
+  padding: 0;
+}

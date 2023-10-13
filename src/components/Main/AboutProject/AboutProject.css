@@ -1,0 +1,149 @@
+/* -------------ABOUT PROJECT ----------------- */
+.about-project{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+.about-project__content {
+  padding: 111px 0px 111px;
+  margin: 0 auto;
+  max-width: 1140px;
+  width: calc(100% - 70px * 2);
+}
+
+@media screen and (max-width: 850px) {
+  .about-project__content {
+    max-width: 710px;
+    width: calc(100% - 50px * 2);
+    padding: 91px 0px 91px;
+  }
+}
+
+
+
+
+.subtitle{
+  box-sizing: border-box;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #dadada;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+
+}
+.about-project__subtitle{
+  margin: 0;
+}
+
+.about-project__facts{
+  display: flex;
+  flex-direction: row;
+  margin: 70px 0 110px;
+  gap: 40px;
+}
+
+@media screen and (max-width: 850px) {
+  .about-project__facts {
+    gap: 30px;
+    margin: 70px 0 93px;
+  }
+}
+
+.facts{
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.facts__fact{
+  flex: 0 1 50%;
+}
+
+.facts__title{
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0 0 26px 0;
+  letter-spacing: -0.04em;
+
+}
+@media screen and (max-width: 850px) {
+  .facts__title {
+    padding: 0 0 22px 0;
+  }
+}
+
+.description{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+
+}
+@media screen and (max-width: 850px) {
+  .description {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+.facts__description{
+  margin: 0;
+  padding: 0;
+}
+
+/* ----------------- */
+.chart{
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.about-project__chart{
+  display: flex;
+  flex-direction: row;
+}
+
+.chart__term{
+  flex: 0 1 20%;
+}
+
+@media screen and (max-width: 850px) {
+  .chart__term {
+    min-width: 140px;
+  }
+}
+
+.chart__term_ext{
+  flex: 0 1 80%;
+}
+
+.chart__time{
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0;
+  padding: 9px 0 9px 0;
+  background-color: #303030;
+
+}
+.chart__time_light:first-of-type {
+  color: #000;
+  background-color: #3DDC84;
+}
+
+/* .chart__time_light{
+
+} */
+.chart__phase{
+  color: #8B8B8B;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0;
+  padding-top: 14px;
+}

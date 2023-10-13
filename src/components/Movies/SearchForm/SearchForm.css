@@ -1,0 +1,128 @@
+.search-bar {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.search-bar {
+  background-color: #2F2F2F;
+  min-height: 46px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.search__input {
+  width: 100%;
+  margin-right: 50px;
+  display: block;
+  border-style: none;
+  box-sizing: border-box;
+  color: #8b8b8b;
+  background-color: transparent;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 17px;
+  padding: 14px 0px 14px 22px;
+}
+
+.search__input:focus {
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-radius: 40px;
+}
+
+.search-bttn {
+  display: block;
+  margin: 0 6px 0 0;
+  padding: 0;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  background-color: #4285F4;
+  background-image: url('../../../images/search-arrow.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 5px 12px;
+}
+.movies__filter-checkbox{
+  border-bottom: 1px solid #424242;
+  padding: 41px 0 69px;
+  display: flex;
+  justify-content: center;
+}
+.filter-checkbox {
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+
+}
+
+
+.checkbox {
+  position: absolute;
+  width: 1px;
+  /* если у элемента не будет размеров, некоторые браузеры посчитают, что его вообще нет */
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(1px);
+  visibility: hidden;
+
+}
+
+.visible-checkbox {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  background-color: #2f2f2f;
+  width: 36px;
+  height: 20px;
+  border-radius: 20px;
+  transition: padding-left 0.5s ease-out, background 0.5s ease-out;
+  padding-left: 2px;
+  cursor: pointer;
+
+}
+
+.checkbox:checked+.visible-checkbox {
+  background-color: #3ddc84;
+  padding-left: 18px;
+}
+.visible-checkbox::before{
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #d15252;
+  transition: background 0.5s ease-out;
+
+}
+
+.checkbox:checked + .visible-checkbox::before {
+  background-color: #fff;
+}
+
+.checkbox-toggle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #d15252;
+}
+
+.filter-checkbox__label {
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  padding-left: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+}
+.filter-checkbox__label:hover {
+  opacity: 0.6;
+}
