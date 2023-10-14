@@ -11,7 +11,7 @@ function AboutMe() {
           <div className="about-me__info">
             <h2 className="title about-me__name">Alexander</h2>
             <p className="about-me__job-title">Web developer</p>
-            <p className="description">
+            <p className="description about-me__summary">
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.

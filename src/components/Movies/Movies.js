@@ -5,11 +5,11 @@ import SearchForm from './SearchForm/SearchForm';
 function Movies() {
   return (
     <section className="movies page__partition page__partition_color_black page__partition_grow">
-      <div className="movies__content page__content">
+
         <SearchForm />
         <MoviesCardList />
-        <button className="movies__more-bttn" type="button">Еще</button>
-      </div>
+        {/* <button className="movies__more-bttn" type="button">Еще</button> */}
+
     </section>
     /* <article className="movie">
               <a href="www.google.com" className="movie__link">

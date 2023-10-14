@@ -8,7 +8,7 @@ import logo from '../../images/logo.svg';
 
 function Header({ loggedIn }) {
   return (
-    <header className="header page__partition page__partition_color_turquoise">
+    <header className={`header page__partition page__partition_color_${loggedIn ? 'black' : 'turquoise'}`}>
       <div className="header__content page__content">
         <a className="logo" href="#">
           <img

@@ -1,18 +1,19 @@
-.search-bar {
+.search {
   font-family: 'Inter', Arial, sans-serif;
   font-weight: 400;
 }
 
-.search-bar {
+.search__bar {
   background-color: #2F2F2F;
   min-height: 46px;
   border-radius: 40px;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .search__input {
-  width: 100%;
+  /* width: 100%; */
   margin-right: 50px;
   display: block;
   border-style: none;
@@ -23,6 +24,7 @@
   font-size: 13px;
   line-height: 17px;
   padding: 14px 0px 14px 22px;
+  flex-grow: 1;
 }
 
 .search__input:focus {
@@ -47,13 +49,22 @@
   background-repeat: no-repeat;
   background-size: 5px 12px;
 }
-.movies__filter-checkbox{
+/* .movies__filter-checkbox{
   border-bottom: 1px solid #424242;
   padding: 41px 0 69px;
   display: flex;
   justify-content: center;
+} */
+@media screen and (max-width: 850px)  {
+  .movies__content {
+    max-width: 710px;
+    width: calc(100% - 30px * 2);
+    padding: 80px 0px 80px;
+
+  }
 }
-.filter-checkbox {
+
+.filter {
   color: #fff;
   /* background-color: #073042; */
   font-family: 'Inter', Arial, sans-serif;
@@ -62,6 +73,21 @@
   align-items: center;
 
 }
+.search__filter {
+  align-self: center;
+  padding-top: 41px;
+  padding-bottom: 69px;
+
+}
+
+@media screen and (max-width: 850px)  {
+  .search__filter {
+    padding-top: 41px;
+    padding-bottom: 50px;
+
+  }
+}
+
 
 
 .checkbox {
@@ -79,7 +105,7 @@
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  background-color: #2f2f2f;
+  background-color: #343434;
   width: 36px;
   height: 20px;
   border-radius: 20px;
@@ -90,7 +116,7 @@
 }
 
 .checkbox:checked+.visible-checkbox {
-  background-color: #3ddc84;
+  background-color: #2be080;
   padding-left: 18px;
 }
 .visible-checkbox::before{
@@ -98,7 +124,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #d15252;
+  background-color: #a0a0a0;
   transition: background 0.5s ease-out;
 
 }
@@ -114,7 +140,7 @@
   background-color: #d15252;
 }
 
-.filter-checkbox__label {
+.filter__label {
   font-size: 14px;
   line-height: 18px;
   text-decoration: none;
@@ -123,6 +149,11 @@
   cursor: pointer;
   user-select: none;
 }
-.filter-checkbox__label:hover {
-  opacity: 0.6;
+@media screen and (max-width: 450px) {
+  .filter__label  {
+    font-size: 11px;
+  }
+}
+.filter__label:hover {
+  opacity: 0.7;
 }

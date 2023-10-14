@@ -13,17 +13,17 @@ function Navigation({ loggedIn }) {
               <li><a href="https://yandex.ru/pogoda" className="link menu__link">Фильмы</a></li>
               <li><a href="https://yandex.ru/pogoda" className="link menu__link">Сохраненные фильмы</a></li>
             </ul>
-            <div className="burger-button">
-              <span className="burger-button__line"></span>
-            </div>
           </nav>
           <nav className="authorisation header__authorisation">
             <button className="authorisation__profile" type="button">Аккаунт
               <img
                 src={accountImg}
                 alt="Пиктограмма аккаунта"
-                className="authorisation__img" />
+                className={`authorisation__img ${loggedIn && 'authorisation__img_dark'}`} />
             </button>
+            <div className="burger-button">
+              <span className="burger-button__line"></span>
+            </div>
           </nav>
         </>
         : <>

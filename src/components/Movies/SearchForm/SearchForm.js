@@ -2,8 +2,9 @@ import React from 'react';
 
 function SearchForm() {
   return (
-   <> <form className="search-form movies__search__form">
-      <div className="search-bar">
+    <div className="search movies__search">
+   <form className="search__form">
+      <div className="search__bar">
         <input
           id="search"
           type="text"
@@ -14,14 +15,14 @@ function SearchForm() {
         <button type="submit" className="search-bttn"></button>
       </div>
     </form>
-    <label className="filter-checkbox">
+    <label className="filter search__filter">
       <input type="checkbox" className="checkbox" />
       <div className="visible-checkbox">
         {/* <div className="checkbox-toggle"></div> */}
       </div>
-      <span className="filter-checkbox__label">Короткометражки</span>
+      <span className="filter__label">Короткометражки</span>
     </label>
-    </>
+    </div>
 
   );
 }
