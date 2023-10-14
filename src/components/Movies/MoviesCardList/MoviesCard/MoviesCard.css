@@ -203,11 +203,16 @@
   background-color: #2f2f2f;
   cursor: pointer;
   transition: opacity 0.2s;
-  margin: 60px 0 159px 0;
+  margin: 23px 0 159px 0;
   cursor: pointer;
 
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 850px) {
+  .movies__more-bttn {
+    margin: 50px 0 159px 0;
+  }
+}
+@media screen and (max-width: 450px) {
   .movies__more-bttn {
     margin: 62px 0 159px 0;
   }

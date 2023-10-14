@@ -31,18 +31,11 @@ function MoviesCardList() {
           {/* <MoviesCard title={'Gimme Danger: История Игги и The Stooge...'}
           duration={'1ч 45м'} cover={film07} />
           <MoviesCard title={'Дженис: Маленькая девочка грустит'}
-          duration={'1ч 45м'} cover={film08} /> */}
-          {/* <MoviesCard title={'Соберись перед прыжком'} duration={'1ч 45м'} cover={film09} />
+          duration={'1ч 45м'} cover={film08} />
+          <MoviesCard title={'Соберись перед прыжком'} duration={'1ч 45м'} cover={film09} />
           <MoviesCard title={'Пи Джей Харви: A dog called money'}
           duration={'1ч 45м'} cover={film10} /> */}
-          {/* <MoviesCard title={'По волнам: Искусство звука в кино'} duration={'1ч 45м'}
-          cover={film11} /> */}
 
-          {/* <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard /> */}
           <button className="movies__more-bttn" type="button">Еще</button>
 
         </div>
