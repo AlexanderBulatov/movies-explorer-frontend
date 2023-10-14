@@ -9,25 +9,36 @@
   /* justify-content: center; */
   align-items: center;
   position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  width: 100%;
+  left: 100%;
+  height: 100%;
   z-index: 999;
   background-color: rgba(0,0,0,.5);
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.3s, opacity 0.3s ease-in;
+  transition: visibility 1s, opacity 0.3s ease-in, left 0.3s ease-in-out;
 }
 
 .popup_opened {
+
   opacity: 1;
   visibility: visible;
+  left: 0;
+
 }
+
+
+/* .popup_opened .popup__content {
+  opacity: 1;
+  visibility: visible;
+  width: 67.7%;
+} */
+
 .popup__content {
   margin-left: auto;
   /* min-width: 520px; */
   /* width: calc(768% / 520%); */
+
   width: 67.7%;
   flex-grow: 1;
   /* height: 100%; */
@@ -38,20 +49,41 @@
   /* visibility: hidden;
   opacity: 0;
   transition: visibility 0.3s, opacity 0.3s ease-in; */
+  transition: width 0.3s ease-in;
+}
+
+@media screen and (max-width: 450px)  {
+  .popup__content {
+    width: 100%;
+  }
 }
 .popup__close-bttn {
   box-sizing: border-box;
   width: 100%;
-  padding-top: 20px;
-  padding-right: 20px;
+  padding-top: 28px;
+  padding-right: 28px;
   display: flex;
   justify-content: flex-end;
 }
+@media screen and (max-width: 450px)  {
+  .popup__close-bttn {
+    padding-top: 20px;
+    padding-right: 20px;
+  }
+}
 
 .popup__menu {
-  padding-top: 150px;
+  padding-top: 114px;
   padding-bottom: 50px;
+  flex-grow: 1;
 
+}
+@media screen and (max-width: 450px)  {
+  .popup__menu  {
+    padding-top: 107px;
+    padding-bottom: 50px;
+    flex-grow: 1;
+  }
 }
 
 .popup__links {
@@ -64,6 +96,13 @@
   margin: 0;
   padding: 0;
 }
+@media screen and (max-width: 450px)  {
+  .popup__links {
+    gap: 20px;
+  }
+}
+
+
 
 .popup__link {
   display: block;
@@ -73,11 +112,15 @@
   font-size: 18px;
   line-height: 22px;
   box-sizing: border-box;
-  padding-bottom: 5px;
+  padding: 0 0 4px 0;
+
 }
-.popup__auth{
-  margin-top: auto;
-  margin-bottom: 100px;
+.popup__link_current {
+  border-bottom: 2px solid #fff;
+}
+.popup__profile-bttn{
+
+  margin-bottom: 90px;
 }
 .popup_type_404{
   background-color: #202020;

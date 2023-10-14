@@ -6,7 +6,7 @@ import Navigation from './Navigation/Navigation';
 import logo from '../../images/logo.svg';
 // import cvFoto from '../../images/foto-profile.jpg';
 
-function Header({ loggedIn }) {
+function Header({ loggedIn, onBurger, isSideMenuOpen }) {
   return (
     <header className={`header page__partition page__partition_color_${loggedIn ? 'black' : 'turquoise'}`}>
       <div className="header__content page__content">
@@ -17,7 +17,10 @@ function Header({ loggedIn }) {
             className="logo__img"
           />
         </a>
-        <Navigation loggedIn={loggedIn} />
+        <Navigation
+          loggedIn={loggedIn}
+          onBurger={onBurger}
+          isSideMenuOpen={isSideMenuOpen} />
       </div>
     </header>
 
@@ -41,6 +44,8 @@ function Header({ loggedIn }) {
 }
 Header.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
+  onBurger: PropTypes.func,
+  isSideMenuOpen: PropTypes.bool.isRequired,
 };
 
 export default Header;

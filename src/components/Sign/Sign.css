@@ -1,22 +1,43 @@
-.sign{
+.sign {
   font-family: 'Inter', Arial, sans-serif;
   font-weight: 400;
-  /* align-items: center; */
-  /* justify-content: flex-start; */
+  display: flex;
+  flex-direction: column;
+
+
 }
-.sign__title{
-  margin: 40px 0;
+@media screen and (max-width: 500px)  {
+  .sign  {
+    flex-grow: 1;
+    padding: 0 0 30px 0;
+
+  }
 }
-.sign__title{
+.sign__title {
   margin: 40px 0;
   align-self: flex-start;
 
+}
+
+
+@media screen and (max-width: 450px)  {
+  .sign__title {
+    align-self: center;
+
+    margin: 50px 0 80px;
+  }
 }
 .sign__form{
   display: flex;
   flex-direction: column;
   min-height: 380px;
   width: 100%;
+}
+
+@media screen and (max-width: 450px)  {
+  .sign__form {
+    flex-grow: 1;
+  }
 }
 .sign__label {
   display: block;
@@ -50,22 +71,42 @@
   width: 100%;
   margin-top: 10px;
   margin-bottom: 0px;
-  /* min-height: 10px; */
+  min-height: 10px;
   padding: 0;
   opacity: 0;
 }
 
+@media screen and (max-width: 450px)  {
+  .sign__submit-bttn {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
 .sign__login {
   color:#8b8b8b;
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  margin-top: 16px;
+  margin: 16px 0 0 0;
   padding: 0;
+}
+@media screen and (max-width: 450px)  {
+  .sign__login {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }
 .sign__link {
   text-decoration: none;
   color:#4285f4;
   font-size: 14px;
   line-height: 17px;
+  padding: 0;
+  margin: 0;
+}
+@media screen and (max-width: 450px)  {
+  .sign__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

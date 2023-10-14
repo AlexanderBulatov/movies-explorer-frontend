@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import accountImg from '../../../images/account.svg';
 
-function Navigation({ loggedIn }) {
+function Navigation({ loggedIn, onBurger }) {
   return (
     <>
       {loggedIn
@@ -15,15 +15,18 @@ function Navigation({ loggedIn }) {
             </ul>
           </nav>
           <nav className="authorisation header__authorisation">
-            <button className="authorisation__profile" type="button">Аккаунт
+            <button
+            className="profile-bttn authorisation__profile-bttn"
+            type="button">
+              Аккаунт
               <img
                 src={accountImg}
                 alt="Пиктограмма аккаунта"
-                className={`authorisation__img ${loggedIn && 'authorisation__img_dark'}`} />
+                className={`profile-bttn__img ${loggedIn && 'profile-bttn__img_dark'}`} />
             </button>
-            <div className="burger-button">
+            <button className="burger-button" onClick = {onBurger}>
               <span className="burger-button__line"></span>
-            </div>
+            </button>
           </nav>
         </>
         : <>
@@ -38,6 +41,7 @@ function Navigation({ loggedIn }) {
 
 Navigation.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
+  onBurger: PropTypes.func,
 };
 
 export default Navigation;
