@@ -1,5 +1,5 @@
 import React from 'react';
-import MoviesCard from './MoviesCard/MoviesCard';
+import MoviesCard from '../MoviesCard/MoviesCard';
 // import SearchForm from '../SearchForm/SearchForm';
 import film00 from '../../../images/covers/00.jpg';
 import film01 from '../../../images/covers/01.jpg';

@@ -3,7 +3,7 @@ import React from 'react';
 function AboutProject() {
   return (
     <section className="about-project page__partition page__partition_color_black">
-        <div className="about-project__content page__content">
+        <div className="about-project__content" id= 'project'>
           <h2 className="subtitle about-project__subtitle">О проекте</h2>
 
           <u className="facts about-project__facts">

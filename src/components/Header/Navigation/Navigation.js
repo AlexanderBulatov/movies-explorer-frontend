@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import accountImg from '../../../images/account.svg';
@@ -10,29 +11,27 @@ function Navigation({ loggedIn, onBurger }) {
         ? <>
           <nav className="menu header__menu">
             <ul className="menu__film">
-              <li><a href="https://yandex.ru/pogoda" className="link menu__link">Фильмы</a></li>
-              <li><a href="https://yandex.ru/pogoda" className="link menu__link">Сохраненные фильмы</a></li>
+              <li><NavLink to="/movies" className={({ isActive }) => `link menu__link ${isActive ? 'menu__link_current' : ''}`}>Фильмы</NavLink></li>
+              <li><NavLink to="/saved-movies" className={({ isActive }) => `link menu__link ${isActive ? 'menu__link_current' : ''}`}>Сохраненные</NavLink></li>
             </ul>
           </nav>
           <nav className="authorisation header__authorisation">
-            <button
-            className="profile-bttn authorisation__profile-bttn"
-            type="button">
-              Аккаунт
+            <Link to="/profile" className="profile-bttn navigation__profile-bttn" >Аккаунт
               <img
                 src={accountImg}
                 alt="Пиктограмма аккаунта"
-                className={`profile-bttn__img ${loggedIn && 'profile-bttn__img_dark'}`} />
-            </button>
-            <button className="burger-button" onClick = {onBurger}>
+                // className={`profile-bttn__img ${loggedIn && 'profile-bttn__img_dark'}`} />
+                className={`profile-bttn__img ${!(window.location.pathname === '/') && 'profile-bttn__img_dark'}`} />
+            </Link>
+            <button className="burger-button" onClick={onBurger}>
               <span className="burger-button__line"></span>
             </button>
           </nav>
         </>
         : <>
           <nav className="authorisation header__authorisation">
-            <a href="#" className="link authorisation__reg" type="button">Регистрация</a>
-            <button className="authorisation__login" type="button">Войти</button>
+            <a href="#" className="link navigation__reg" type="button">Регистрация</a>
+            <button className="navigation__login" type="button">Войти</button>
           </nav>
         </>}
     </>

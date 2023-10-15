@@ -80,6 +80,20 @@ body{
   opacity: 1;
 }
 
+/* temprory css for Stage 3 Diploma, view control layout
+It will be custom validation on stage 4*/
+
+input:valid:not(:placeholder-shown) {
+  border-color: green;
+}
+
+input:invalid:not(:placeholder-shown) {
+  border-color: red;
+}
+input:invalid:not(:placeholder-shown) + .error {
+  opacity: 1;
+}
+
 .page__partition_grow {
   flex-grow: 1;
 }
@@ -116,6 +130,7 @@ body{
     flex-grow: 1;
   }
 }
+
 
 .page__partition_color_turquoise {
   background-color: #073042;

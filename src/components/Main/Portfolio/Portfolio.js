@@ -7,16 +7,16 @@ function Portfolio() {
           <h3 className="portfolio__title">Портфолио</h3>
           <u className="projects portfolio__projects">
             <li className='projects__sample'>
-              <a href="#" className="link projects__title">Статичный сайт</a>
-              <a href="#" className="link projects__link">&#129125;</a>
+              <a href="https://github.com/AlexanderBulatov/how-to-learn" className="link projects__title" target="_blank" rel="noreferrer">Статичный сайт</a>
+              <a href="https://github.com/AlexanderBulatov/how-to-learn" className="link projects__link" target="_blank" rel="noreferrer">&#129125;</a>
             </li>
             <li className='projects__sample'>
-              <a href="#" className="link projects__title">Адаптивный сайт</a>
-              <a href="#" className="link projects__link">&#129125;</a>
+              <a href="https://github.com/AlexanderBulatov/russian-travel" className="link projects__title" target="_blank" rel="noreferrer">Адаптивный сайт</a>
+              <a href="https://github.com/AlexanderBulatov/russian-travel" className="link projects__link" target="_blank" rel="noreferrer">&#129125;</a>
             </li>
             <li className='projects__sample'>
-              <a href="#" className="link projects__title">Одностраничное приложение</a>
-              <a href="#" className="link projects__link">&#129125;</a>
+              <a href="https://github.com/AlexanderBulatov/react-mesto-api-full-gha" className="link projects__title" target="_blank" rel="noreferrer">Одностраничное приложение</a>
+              <a href="https://github.com/AlexanderBulatov/react-mesto-api-full-gha" className="link projects__link" target="_blank" rel="noreferrer">&#129125;</a>
             </li>
           </u>
         </div>

@@ -1,0 +1,123 @@
+.sign {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+
+
+}
+@media screen and (max-width: 500px)  {
+  .sign  {
+    flex-grow: 1;
+    padding: 0 0 30px 0;
+
+  }
+}
+.sign__title {
+  margin: 40px 0;
+  align-self: flex-start;
+
+}
+
+
+@media screen and (max-width: 450px)  {
+  .sign__title {
+    align-self: center;
+
+    margin: 50px 0 80px;
+  }
+}
+.sign__form{
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+  width: 100%;
+}
+
+@media screen and (max-width: 450px)  {
+  .sign__form {
+    flex-grow: 1;
+  }
+}
+.sign__label {
+  display: block;
+  color: #8b8b8b;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+.sign__input {
+  width: 100%;
+  display: block;
+  border-style: none;
+  box-sizing: border-box;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #2f2f2f;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 15px;
+  /* margin:  0 0 4px 0;
+  padding: 0 0 9px 0; */
+}
+.sign__input_error {
+  border-bottom: 1px solid rgba(255,0,0,1);
+}
+
+.sign__error {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  min-height: 10px;
+  padding: 0;
+  opacity: 0;
+}
+/* temprory css for Stage 3 Diploma, view control layout
+It will be custom validation on stage 4*/
+
+input:invalid ~ .sign__submit-bttn {
+  color: #c2c2c2;
+  background-color: #f8f8f8;
+  border: 1px solid #000000;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+
+@media screen and (max-width: 450px)  {
+  .sign__submit-bttn {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+.sign__login {
+  color:#8b8b8b;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  margin: 16px 0 0 0;
+  padding: 0;
+}
+@media screen and (max-width: 450px)  {
+  .sign__login {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+.sign__link {
+  text-decoration: none;
+  color:#4285f4;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 0;
+  margin: 0;
+}
+@media screen and (max-width: 450px)  {
+  .sign__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

@@ -12,16 +12,16 @@
 </nav><nav className="authorisation header__authorisation">
     {loggedIn
       ? <>
-        <button className="authorisation__profile" type="button">Аккаунт
+        <button className="navigation__profile" type="button">Аккаунт
           <img
             src={accountImg}
             alt="Пиктограмма аккаунта"
-            className="authorisation__img" />
+            className="navigation__img" />
         </button>
       </>
       : <>
-        <a href="#" className="authorisation__reg" type="button">Регистрация</a>
-        <button className="authorisation__login" type="button">Войти</button>
+        <a href="#" className="navigation__reg" type="button">Регистрация</a>
+        <button className="navigation__login" type="button">Войти</button>
       </>}
   </nav></>;
 
