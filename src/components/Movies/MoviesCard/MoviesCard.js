@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import film1 from '../../../../images/film-1.jpg';
 
 function MoviesCard({ title, duration, cover }) {
   const [isLiked, setLike] = React.useState(false);
