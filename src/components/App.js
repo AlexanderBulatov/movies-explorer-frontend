@@ -17,8 +17,6 @@ function App() {
   return (
     <div className="page" >
       <Routes>
-        <Route path="*" element={<Navigate to="/page-404" replace />} />
-        <Route path="/page-404" element={<Page404 />} />
         <Route path="/" element={[
           <Header key="header"
             loggedIn={loggedIn}
@@ -76,6 +74,8 @@ function App() {
         <Route path="/signup" element={[
           <Register key="register" />]}
         />
+        <Route path="*" element={<Navigate to="/page-404" replace />} />
+        <Route path="/page-404" element={<Page404 />} />
       </Routes>
 
       <SidePopup isSideMenuOpen={isSideMenuOpen} onClose={() => setSideMenuOpen(false)} />
