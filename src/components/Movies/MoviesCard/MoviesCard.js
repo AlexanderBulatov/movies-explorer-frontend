@@ -5,26 +5,26 @@ import PropTypes from 'prop-types';
 function MoviesCard({ title, duration, cover }) {
   const [isLiked, setLike] = React.useState(false);
   return (
-    <div className="movie">
-      <a href="www.google.com" className="movie__link">
+    <figure className="movie">
+      <a href="https://www.youtube.com/watch?v=H3fXWXmlEvc" className="movie__link" target="_blank" rel="noreferrer">
         <img
           src={cover}
-          alt="Фотография автора проекта"
+          alt="Обложка для фильма"
           className="movie__cover"
         />
       </a>
-      <div className="movie__info">
+      <figcaption className="movie__info">
         <div className="movie__caption">
-          <h2 className="movie__title">{title}</h2>
+        <a href="https://www.youtube.com/watch?v=H3fXWXmlEvc" className="link movie__title" target="_blank" rel="noreferrer">{title}</a>
           <button className={`movie-bttn ${window.location.pathname.includes('saved') ? 'movie__remove' : `movie__save ${isLiked && 'movie__save_true'}`} `}
           type="button"
           onClick={() => !window.location.pathname.includes('saved') && setLike(!isLiked)}>
           </button>
         </div>
         <p className="movie__duration">{duration}</p>
-      </div>
+      </figcaption>
 
-    </div>
+    </figure>
 
   );
 }

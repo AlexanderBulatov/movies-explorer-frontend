@@ -60,6 +60,9 @@
 .profile__info{
   flex-grow: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+
   /* min-height: 282px; */
 }
 
@@ -103,6 +106,7 @@
   box-sizing: border-box;
   padding: 3px 0;
   min-height: 16px;
+
 }
 
 /* .profile__button-place{
@@ -133,6 +137,8 @@
 
 .profile__save-bttn{
   width: 100%;
+  align-self: flex-end;
+  margin: 0;
 }
 
 .profile__link{
@@ -151,6 +157,18 @@
   }
 }
 .profile__save-error{
+  margin-top: auto;
   margin-bottom: 20px;
   font-size: 11px;
+  align-self: center;
+
+}
+
+.profile__input:invalid{
+
+  border: 1px solid red;
+
+}
+.profile__info:invalid {
+
 }

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import accountImg from '../../images/account.svg';
 
 function SidePopup({ isSideMenuOpen, onClose }) {
-  const menuLinkClassName = ({ isActive }) => `side-popup__link ${isActive ? 'side-popup__link_current' : ''}`;
+  const menuLinkClassName = ({ isActive }) => `link side-popup__link ${isActive ? 'side-popup__link_current' : ''}`;
   return (
 
     <div className={`side-popup ${isSideMenuOpen && 'side-popup_opened'}`}>

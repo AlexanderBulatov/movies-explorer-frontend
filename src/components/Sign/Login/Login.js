@@ -16,37 +16,35 @@ function Login() {
         <h2 className="page-title sign__title">Рады видеть!</h2>
         <form className="sign__form" name="" >
 
-          <label className="sign__label">Имя</label>
+          <label className="sign__label">E-mail</label>
           <input
-            id="name"
-            type="text"
-            name="name"
-            placeholder="Ваше имя"
-            className="sign__input sign__input_type_name"
+            id="email-login"
+            type="email"
+            name="email"
+            placeholder="Ваш Email"
+            className="sign__input sign__input_type_email"
             required
-            minLength="2"
-            maxLength="200"
+            pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
           />
           <span className="error sign__error sign__error_type_name">Имя должно быть от 2 до 200 симоволов
           </span>
           <label className="sign__label">Пароль</label>
           <input
-            id="pass"
+            id="pass-login"
             type="password"
             name="pass"
             placeholder="Введите пароль"
             className="sign__input sign__input_type_pass"
             required
-            minLength="2"
-            maxLength="200"
           />
           <span className="error sign__error sign__error_type_pass
               error_active">Что-то пошло не так...</span>
 
           <button type="submit" className="page-bttn sign__submit-bttn">Войти</button>
         </form>
-        <p className="sign__login">Ещё не зарегистрированы?&ensp;<
-          a className="sign__link" href="">Регистрация</a></p>
+        <p className="sign__login">Ещё не зарегистрированы?&ensp;
+          <Link to="/signup" className="link sign__link" >Регистрация</Link>
+        </p>
       </div>
     </section>
   );

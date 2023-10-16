@@ -59,10 +59,18 @@
 .page-404__back{
   display: block;
   text-decoration: none;
+  background: none;
+  border: none;
   color: #4285f4;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  cursor: pointer;
+}
+
+.page-404__back:hover {
+  /* cursor:auto; */
+  opacity: 0.7;
 }
 @media screen and (max-width: 850px) {
   .page-404__back {

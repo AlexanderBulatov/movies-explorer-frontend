@@ -8,7 +8,7 @@ import logo from '../../images/logo.svg';
 // import cvFoto from '../../images/foto-profile.jpg';
 
 function Header({
-  loggedIn, onBurger, isSideMenuOpen, isBlack,
+  loggedIn, onBurger, isSideMenuOpen, isBlack, onLogin,
 }) {
   return (
     <header className={`header page__partition page__partition_color_${isBlack ? 'black' : 'turquoise'}`}>
@@ -24,7 +24,8 @@ function Header({
         <Navigation
           loggedIn={loggedIn}
           onBurger={onBurger}
-          isSideMenuOpen={isSideMenuOpen} />
+          isSideMenuOpen={isSideMenuOpen}
+          onLogin={onLogin} />
       </div>
     </header>
   );
@@ -32,6 +33,7 @@ function Header({
 Header.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   onBurger: PropTypes.func,
+  onLogin: PropTypes.func,
   isSideMenuOpen: PropTypes.bool.isRequired,
   isBlack: PropTypes.bool.isRequired,
 };

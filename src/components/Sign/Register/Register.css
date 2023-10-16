@@ -114,6 +114,7 @@ input:invalid ~ .sign__submit-bttn {
   line-height: 17px;
   padding: 0;
   margin: 0;
+
 }
 @media screen and (max-width: 450px)  {
   .sign__link {

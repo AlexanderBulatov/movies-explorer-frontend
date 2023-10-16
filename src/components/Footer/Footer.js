@@ -4,7 +4,7 @@ function Footer() {
   return (
 
     <section className="footer page__partition page__partition_color_black">
-      <div className="footer__content page__content">
+      <div className="footer__content">
         <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
         <div className="footer__info">
           <p className="footer__copyright">&copy; 2023 | Alexander B</p>
