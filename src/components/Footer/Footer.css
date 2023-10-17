@@ -23,14 +23,14 @@
   .footer__content {
     max-width: 710px;
     width: calc(100% - 30px * 2);
-    padding: 44px 0px 20px;
+
   }
 }
 @media screen and (max-width: 450px) {
   .footer__content {
     max-width: 350px;
     width: calc(100% - 14px * 2);
-    padding: 90px 0px 20px;
+
   }
 }
 

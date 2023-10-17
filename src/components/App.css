@@ -96,7 +96,11 @@ body{
 .error_active {
   opacity: 1;
 }
-
+.page__content{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 .page__partition_grow {
   flex-grow: 1;
 }

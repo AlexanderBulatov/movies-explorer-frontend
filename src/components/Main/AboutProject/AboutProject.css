@@ -64,6 +64,13 @@
   margin: 0;
 }
 
+.facts{
+  list-style-type: none;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
 .about-project__facts{
   display: flex;
   flex-direction: row;
@@ -85,10 +92,7 @@
   }
 }
 
-.facts{
-  list-style-type: none;
-  text-decoration: none;
-}
+
 
 .facts__fact{
   flex: 0 1 50%;
@@ -148,9 +152,12 @@
 }
 
 /* ----------------- */
+
 .chart{
   list-style-type: none;
   text-decoration: none;
+  padding: 0;
+  margin: 0;
 }
 
 .about-project__chart{

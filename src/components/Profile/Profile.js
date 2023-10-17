@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function Profile({ onSignOut }) {
   const [editingProfile, setEditingProfile] = React.useState(false);
   return (
-    <main>
+    <main className="page__content">
       <section className="profile page__partition page__partition_grow page__partition_color_black">
         <div className="profile__content">
           <h1 className="page-title profile__title">Привет, Виталий!</h1>

@@ -18,8 +18,8 @@ import film2 from '../../../images/film-2.jpg';
 function MoviesCardList() {
   return (
 
-    <section className = "movies-panel">
-      <ul className="movies-panel__list">
+    <section className = "movies__panel">
+      <ul className="movies__list">
         <MoviesCard title={'33 слова о дизайне'} duration={'1ч 45м'} cover={film00} />
         <MoviesCard title={'Киноальманах «100 лет дизайна»'} duration={'1ч 45м'} cover={film2} />
         <MoviesCard title={'В погоне за Бенкси'} duration={'1ч 45м'} cover={film08} />
@@ -37,7 +37,7 @@ function MoviesCardList() {
     <MoviesCard title={'Пи Джей Харви: A dog called money'}
     duration={'1ч 45м'} cover={film10} /> */}
       </ul>
-      <button className="movies-panel__more-bttn" type="button">Еще</button>
+      <button className="movies__more-bttn" type="button">Еще</button>
     </section>
 
   );

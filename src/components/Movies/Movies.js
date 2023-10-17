@@ -6,7 +6,7 @@ import Preloader from './Preloader/Preloader';
 function Movies() {
   const isLoading = false;
   return (
-    <main>
+    <main className="page__content">
       <section className="movies page__partition page__partition_color_black page__partition_grow">
           <SearchForm />
           {isLoading && <Preloader />}

@@ -4,7 +4,7 @@ import logo from '../../../images/logo.svg';
 
 function Login() {
   return (
-    <main>
+    <main className="page__content">
       <section className="sign page__partition page__partition_grow page__partition_color_black">
         <div className="page__sign">
           <Link to="/" className="logo sign__logo" >
