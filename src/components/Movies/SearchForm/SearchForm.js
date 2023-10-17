@@ -14,14 +14,12 @@ function SearchForm() {
             required />
           <button type="submit" className="search-bttn"></button>
         </div>
+        <label className="filter search__filter">
+          <input type="checkbox" className="checkbox" />
+          <span className="visible-checkbox"></span>
+          <span className="filter__label">Короткометражки</span>
+        </label>
       </form>
-      <label className="filter search__filter">
-        <input type="checkbox" className="checkbox" />
-        <div className="visible-checkbox">
-          {/* <div className="checkbox-toggle"></div> */}
-        </div>
-        <span className="filter__label">Короткометражки</span>
-      </label>
     </div>
 
   );

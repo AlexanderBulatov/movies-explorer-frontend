@@ -9,16 +9,16 @@ function AboutMe() {
         <h3 className="subtitle about-me__subtitle">Студент</h3>
         <div className="about-me__resume">
           <div className="about-me__info">
-            <h2 className="title about-me__name">Alexander</h2>
+            <h2 className="title about-me__name">Alexander B</h2>
             <p className="about-me__job-title">Web developer</p>
-            <p className="description about-me__summary">
+            <p className="about-me__summary">
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
               Lorem ipsum dolor sit am officia deserunt mollit anim id est laborum.
             </p>
-            <a href="https://github.com/AlexanderBulatov/" className="about-me__github" target="_blank" rel="noreferrer">Github</a>
+            <a href="https://github.com/AlexanderBulatov/" className="link about-me__github" target="_blank" rel="noreferrer">Github</a>
           </div>
           <div className="about-me__foto">
             <img

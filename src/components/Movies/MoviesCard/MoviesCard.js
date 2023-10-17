@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 function MoviesCard({ title, duration, cover }) {
   const [isLiked, setLike] = React.useState(false);
   return (
-    <figure className="movie">
+    <li className="movie">
       <a href="https://www.youtube.com/watch?v=H3fXWXmlEvc" className="movie__link" target="_blank" rel="noreferrer">
         <img
           src={cover}
-          alt="Обложка для фильма"
+          alt={`Обложка для фильма ${title}`}
           className="movie__cover"
         />
       </a>
-      <figcaption className="movie__info">
+      <div className="movie__info">
         <div className="movie__caption">
         <a href="https://www.youtube.com/watch?v=H3fXWXmlEvc" className="link movie__title" target="_blank" rel="noreferrer">{title}</a>
           <button className={`movie-bttn ${window.location.pathname.includes('saved') ? 'movie__remove' : `movie__save ${isLiked && 'movie__save_true'}`} `}
@@ -21,9 +21,8 @@ function MoviesCard({ title, duration, cover }) {
           </button>
         </div>
         <p className="movie__duration">{duration}</p>
-      </figcaption>
-
-    </figure>
+      </div>
+    </li>
 
   );
 }

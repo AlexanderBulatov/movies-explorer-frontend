@@ -58,18 +58,14 @@
 
 @media screen and (max-width: 700px) {
   .portfolio__projects {
-    padding-top: 20px;
+    padding-top: 21px;
   }
 }
 
 .projects__sample{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: baseline;
   border-top: 1px solid #424242;
-  padding-top: 17px;
-  padding-bottom: 12px;
+  padding-top: 20px;
+  padding-bottom: 19px;
   box-sizing: border-box;
   /* outline: 1px red solid; */
 }
@@ -88,6 +84,9 @@
   /* outline: 1px red solid; */
 
   /* display: block; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #fff;
   text-decoration: none;
   font-weight: 400;
@@ -112,26 +111,22 @@
   }
 }
 
-.projects__link{
+.projects__pointer{
+  display: block;
   /* display: block; */
-  padding-right: 5px;
+  /* background-image: url('../../../images/pointer-ne.svg'); */
+  /* padding-right: 5px; */
   color: #fff;
   text-decoration: none;
-  font-weight: 400;
-  font-size: 26px;
-  line-height: 60px;
-  letter-spacing: -.04em;
+  width: 16px;
+  height: 16px;
+  object-position: center;
+  margin-right: 6px;
 }
-
-@media screen and (max-width: 850px) {
-  .projects__link {
-    font-size: 24px;
+@media screen and (max-width: 450px) {
+  .projects__pointer {
+    width: 9px;
+    height: 9px;
+    margin: 0 5px 5px 0;
   }
 }
-@media screen and (max-width: 700px) {
-  .projects__link {
-    font-size: 18px;
-    line-height: 28px;
-  }
-}
-

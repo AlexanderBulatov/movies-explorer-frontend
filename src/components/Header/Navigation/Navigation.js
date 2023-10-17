@@ -11,9 +11,9 @@ function Navigation({ loggedIn, onBurger, onLogin }) {
         && <nav className="menu navigation__menu">
           <ul className="menu__film">
             <li><NavLink to="/movies" className={({ isActive }) => `link menu__link ${isActive ? 'menu__link_current' : ''}`}>Фильмы</NavLink></li>
-            <li><NavLink to="/saved-movies" className={({ isActive }) => `link menu__link ${isActive ? 'menu__link_current' : ''}`}>Сохраненные</NavLink></li>
+            <li><NavLink to="/saved-movies" className={({ isActive }) => `link menu__link ${isActive ? 'menu__link_current' : ''}`}>Сохранённые фильмы</NavLink></li>
           </ul>
-          <button className="burger-button" onClick={onBurger}>
+          <button className="burger-button" onClick={onBurger} type='button'>
             <span className="burger-button__line"></span>
           </button>
         </nav>}

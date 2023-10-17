@@ -6,12 +6,13 @@ import Preloader from './Preloader/Preloader';
 function Movies() {
   const isLoading = false;
   return (
-    <section className="movies page__partition page__partition_color_black page__partition_grow">
-        <SearchForm />
-        {isLoading && <Preloader />}
-        <MoviesCardList />
-
-    </section>
+    <main>
+      <section className="movies page__partition page__partition_color_black page__partition_grow">
+          <SearchForm />
+          {isLoading && <Preloader />}
+          <MoviesCardList />
+      </section>
+    </main>
   );
 }
 

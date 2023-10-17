@@ -3,6 +3,10 @@
   font-weight: 400;
 }
 
+.search__form{
+  display: flex;
+  flex-direction: column;
+}
 .search__bar {
   background-color: #2F2F2F;
   min-height: 46px;
@@ -31,6 +35,8 @@
   border-top-left-radius: 40px;
   border-bottom-left-radius: 40px;
   border-radius: 40px;
+
+  outline: 1px #3ddc84 solid;
 }
 
 .search-bttn {
@@ -48,6 +54,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 5px 12px;
+}
+
+.search-bttn:hover{
+  opacity: 0.8;
 }
 /* .movies__filter-checkbox{
   border-bottom: 1px solid #424242;
@@ -74,16 +84,20 @@
 
 }
 .search__filter {
+  /* padding-top: 41px;
+  padding-bottom: 69px; */
   align-self: center;
-  padding-top: 41px;
-  padding-bottom: 69px;
+  margin-top: 41px;
+  margin-bottom: 69px;
 
 }
 
 @media screen and (max-width: 850px)  {
   .search__filter {
-    padding-top: 41px;
-    padding-bottom: 50px;
+    /* padding-top: 41px;
+    padding-bottom: 50px; */
+    margin-top: 41px;
+    margin-bottom: 50px;
 
   }
 }
@@ -113,6 +127,9 @@
   padding-left: 2px;
   cursor: pointer;
 
+}
+.visible-checkbox:hover {
+  opacity: 0.8;
 }
 
 .checkbox:checked+.visible-checkbox {

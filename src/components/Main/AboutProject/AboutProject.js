@@ -6,7 +6,7 @@ function AboutProject() {
         <div className="about-project__content" id= 'project'>
           <h2 className="subtitle about-project__subtitle">О проекте</h2>
 
-          <u className="facts about-project__facts">
+          <ul className="facts about-project__facts">
             <li className="facts__fact">
               <h3 className="facts__title">Дипломный проект включал 5 этапов</h3>
               <p className="description facts__description">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
@@ -15,9 +15,9 @@ function AboutProject() {
               <h3 className="facts__title">На выполнение диплома ушло 5 недель</h3>
               <p className="description facts__description">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
             </li>
-          </u>
+          </ul>
 
-          <u className="chart about-project__chart">
+          <ul className="chart about-project__chart">
             <li className="chart__term">
               <h3 className="chart__time chart__time_light">1 неделя</h3>
               <p className="chart__phase">Back-end</p>
@@ -26,7 +26,7 @@ function AboutProject() {
               <h3 className="chart__time">4 недели</h3>
               <p className="chart__phase">Front-end</p>
             </li>
-          </u>
+          </ul>
         </div>
       </section>
   );

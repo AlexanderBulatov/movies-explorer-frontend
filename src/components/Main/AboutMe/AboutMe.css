@@ -96,7 +96,7 @@
   .about-me__job-title {
     padding-top: 20px;
     padding-bottom: 20px;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 16px;
   }
 }
@@ -108,6 +108,22 @@
   font-size: 14px;
   line-height: 22px;
 }
+
+@media screen and (max-width: 850px) {
+  .about-me__summary {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .about-me__summary {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+
+
 
 .about-me__github {
   display: block;

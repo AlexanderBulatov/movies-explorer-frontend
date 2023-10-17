@@ -57,11 +57,14 @@ body{
 .logo {
   display: block;
   cursor: default;
+  width: 38px;
+  height: 38px;
 }
 
 .logo__img {
   display: block;
   width: 38px;
+  height: 38px;
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -93,21 +96,6 @@ body{
 .error_active {
   opacity: 1;
 }
-
-/* temprory css for Stage 3 Diploma, view control layout
-It will be custom validation on stage 4*/
-
-input:valid:not(:placeholder-shown) {
-  border-color: green;
-}
-
-input:invalid:not(:placeholder-shown) {
-  border-color: red;
-}
-input:invalid:not(:placeholder-shown) + .error {
-  opacity: 1;
-}
-
 
 .page__partition_grow {
   flex-grow: 1;
@@ -183,6 +171,10 @@ input:invalid:not(:placeholder-shown) + .error {
 
   background-color: #fff;
   transform: rotate(-90deg);
+}
+
+.close-button:hover{
+  opacity: 0.7;
 }
 
 .profile-bttn {

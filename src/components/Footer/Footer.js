@@ -3,7 +3,7 @@ import React from 'react';
 function Footer() {
   return (
 
-    <section className="footer page__partition page__partition_color_black">
+    <footer className="footer page__partition page__partition_color_black">
       <div className="footer__content">
         <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
         <div className="footer__info">
@@ -16,7 +16,7 @@ function Footer() {
           </nav>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
 

@@ -63,6 +63,24 @@
   /* margin:  0 0 4px 0;
   padding: 0 0 9px 0; */
 }
+.sign__input:focus {
+  outline: 1px yellow solid;
+}
+
+.sign__input:valid:not(:placeholder-shown) {
+  outline: 1px #11a876 solid;
+}
+
+.sign__input:invalid:not(:placeholder-shown) {
+  outline: 1px rgb(180, 11, 96) solid;
+}
+.sign__input:invalid:not(:placeholder-shown) + .error {
+  opacity: 1;
+}
+
+
+
+
 .sign__input_error {
   border-bottom: 1px solid rgba(255,0,0,1);
 }
