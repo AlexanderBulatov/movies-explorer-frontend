@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import accountImg from '../../../images/account.svg';
 
-function Navigation({ loggedIn, onBurger, onLogin }) {
+function Navigation({ loggedIn, onBurger }) {
   return (
     <div className='navigation header__navigation'>
       {loggedIn
@@ -28,8 +28,8 @@ function Navigation({ loggedIn, onBurger, onLogin }) {
         </nav>}
       {!loggedIn
         && <nav className="navigation__authorisation">
-          <Link to="/signup" className="link navigation__reg" >Регистрация</Link>
-          <Link to="/signin" className="navigation__login" onClick = { onLogin }>Войти</Link>
+          <Link to="/signup" className="link navigation__reg" >{`Регистрация ${loggedIn}`}</Link>
+          <Link to="/signin" className="navigation__login" >Войти</Link>
         </nav>}
     </div>
   );

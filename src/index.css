@@ -13,6 +13,7 @@
 @import url(./components/Main/Portfolio/Portfolio.css);
 
 @import url(./components/SidePopup/SidePopup.css);
+@import url(./components/SidePopup/DebugView.css);
 @import url(./components/InfoToolTip/InfoToolTip.css);
 @import url(./components/Movies/Preloader/Preloader.css);
 @import url(./components/Movies/Movies.css);

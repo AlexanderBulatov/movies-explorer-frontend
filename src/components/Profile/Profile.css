@@ -164,8 +164,10 @@
   line-height: 16px;
   text-decoration: none;
   cursor: pointer;
+  border: none;
+  background: none;
 }
-@media screen and (max-width: 500px)  {
+@media screen and (max-width: 500px) {
   .profile__link {
     font-size: 12px;
     line-height: 15px;
