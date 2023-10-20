@@ -1,0 +1,126 @@
+.side-popup {
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  /* justify-content: center; */
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  left: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: rgba(0,0,0,.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 0.3s ease-in, left 0.3s ease-in-out;
+}
+
+.side-popup_opened {
+
+  opacity: 1;
+  visibility: visible;
+  left: 0;
+
+}
+
+
+/* .popup_opened .popup__content {
+  opacity: 1;
+  visibility: visible;
+  width: 67.7%;
+} */
+
+.side-popup__content {
+  margin-left: auto;
+  /* min-width: 520px; */
+  /* width: calc(768% / 520%); */
+
+  width: 67.7%;
+  flex-grow: 1;
+  /* height: 100%; */
+  background-color: #202020;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s ease-in; */
+  transition: width 0.3s ease-in;
+}
+
+@media screen and (max-width: 450px)  {
+  .side-popup__content {
+    width: 100%;
+  }
+}
+.side-popup__close-bttn {
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 28px;
+  padding-right: 28px;
+  display: flex;
+  justify-content: flex-end;
+}
+@media screen and (max-width: 450px)  {
+  .side-popup__close-bttn {
+    padding-top: 20px;
+    padding-right: 20px;
+  }
+}
+
+.side-popup__menu {
+  padding-top: 114px;
+  padding-bottom: 50px;
+  flex-grow: 1;
+
+}
+@media screen and (max-width: 450px)  {
+  .side-popup__menu  {
+    padding-top: 107px;
+    padding-bottom: 50px;
+    flex-grow: 1;
+  }
+}
+
+.side-popup__links {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style-type: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+@media screen and (max-width: 450px)  {
+  .side-popup__links {
+    gap: 20px;
+  }
+}
+
+.side-popup__link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  box-sizing: border-box;
+  padding: 0 0 2px 0;
+  min-height: 26px;
+
+}
+.side-popup__link_current {
+  border-bottom: 2px solid #fff;
+}
+.side-popup__profile-bttn{
+
+  margin-bottom: 90px;
+}
+.side-popup_type_404{
+  background-color: #202020;
+}

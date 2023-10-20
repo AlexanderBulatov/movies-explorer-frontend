@@ -1,0 +1,223 @@
+.movie {
+  color: #fff;
+  background-color: #222;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  /* width: calc((100% - 24px * 2) / 3 ); */
+   width: calc((100% - 24px * 2) / 3 );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 6px;
+  margin: 0;
+  padding: 0;
+
+
+}
+
+@media screen and (max-width: 900px)  {
+  .movie {
+    width: calc((100% - 30px * 1) / 2 );
+  }
+}
+
+@media screen and (max-width: 600px)  {
+  .movie {
+    width: 100%;
+  }
+}
+
+.movie__link {
+  display: block;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.movie__cover {
+  border-radius: 6px 6px 0px 0px;
+  display: block;
+  width: 100%;
+  aspect-ratio: 364 / 203;
+  object-fit: contain;
+  object-position: center;
+
+}
+.movie__cover:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 900px) {
+  .movie__cover {
+   aspect-ratio: 339 / 190;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .movie__cover {
+   aspect-ratio: 300 / 168;
+  }
+}
+/* --------------------- */
+.movie__info {
+  width: calc(100% - 16px * 2);
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  /* padding: 14px 22px 14px 14px; */
+  /* margin: 14px 22px 14px 14px; */
+
+  /* height: 50px; */
+  /* margin: 0 auto */
+}
+@media screen and (max-width: 900px) {
+  .movie__info {
+    width: calc(100% - 14px * 2);
+  }
+}
+@media screen and (max-width: 450px) {
+  .movie__info {
+    width: calc(100% - 10px * 2);
+    padding-left: 4px;
+    min-height: 69px;
+  }
+}
+
+.movie__info:hover {
+  cursor: pointer;
+}
+
+.movie__caption {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 9px;
+  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .movie__caption {
+    padding-top: 8px;
+    padding-bottom: 7px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .movie__caption {
+    padding-top: 7px;
+    padding-bottom: 6px;
+  }
+}
+
+
+.movie__title{
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 1;
+
+}
+@media screen and (max-width: 900px) {
+  .movie__title {
+    padding-bottom: 2px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .movie__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+/* ************************* */
+.movie-bttn {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-left: 29px;
+  flex-shrink: 0;
+  border: none;
+  background-size: 14px 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  transition: opacity 0.2s;
+  cursor: pointer;
+  visibility: hidden;
+}
+.movie:hover .movie-bttn {
+  /* cursor: pointer; */
+  visibility: visible;
+}
+.movie-bttn:hover {
+  opacity: 0.7;
+}
+@media screen and (max-width: 900px) {
+  .movie-bttn {
+    visibility: visible;
+  }
+}
+
+/* *** */
+.movie__save {
+  background: url(../../../images/save-unactive.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.movie:hover .movie__save {
+  /* cursor: pointer; */
+  visibility: visible;
+}
+.movie__save:hover {
+  opacity: 0.8;
+}
+@media screen and (max-width: 900px) {
+  .movie__save {
+    visibility: visible;
+  }
+}
+.movie__save_true {
+  background: url(../../../images/save-active.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.movie__remove {
+  background: url(../../../images/remove.svg);
+  background-size: 7px 7px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ****************************** */
+.movie__duration{
+  color: #8b8b8b;
+  font-size: 11px;
+  line-height: 13px;
+  margin: 0;
+  padding: 0 0 16px 0;
+}
+
+@media screen and (max-width: 900px) {
+  .movie__duration {
+    padding: 0 0 14px 0;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .movie__duration {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+/* ------------------------------ */

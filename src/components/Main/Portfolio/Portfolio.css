@@ -1,0 +1,132 @@
+/* ----- Portfolio ---- */
+.portfolio{
+  color: #fff;
+  /* background-color: #073042; */
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.portfolio__content {
+  /* height: 100%; */
+  padding: 101px 0px 105px;
+  margin: 0 auto;
+  max-width: 1140px;
+  width: calc(100% - 70px * 2);
+
+}
+@media screen and (max-width: 850px) {
+  .portfolio__content {
+    max-width: 710px;
+    width: calc(100% - 50px * 2);
+    padding: 91px 0px 70px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .portfolio__content {
+    max-width: 350px;
+    width: calc(100% - 14px * 2);
+    padding: 70px 0px 50px;
+  }
+}
+
+.portfolio__title{
+  color: #8b8b8b;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0;
+  padding: 0;
+}
+@media screen and (max-width: 700px) {
+  .portfolio__title {
+    font-size: 14px;
+  }
+}
+
+.projects{
+  list-style-type: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+
+}
+
+.portfolio__projects{
+  display: block;
+  padding-top: 29px;
+}
+
+@media screen and (max-width: 700px) {
+  .portfolio__projects {
+    padding-top: 21px;
+  }
+}
+
+.projects__sample{
+  border-top: 1px solid #424242;
+  padding-top: 20px;
+  padding-bottom: 19px;
+  box-sizing: border-box;
+  /* outline: 1px red solid; */
+}
+@media screen and (max-width: 700px) {
+  .projects__sample {
+    padding-top: 20px;
+    padding-bottom: 19px;
+  }
+}
+
+.projects__sample:first-child{
+  border-top: none;
+}
+
+.projects__title{
+  /* outline: 1px red solid; */
+
+  /* display: block; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -.04em;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 850px) {
+  .projects__title {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .projects__title {
+    font-size: 18px;
+    line-height: 28px;
+
+  }
+}
+
+.projects__pointer{
+  display: block;
+  /* display: block; */
+  /* background-image: url('../../../images/pointer-ne.svg'); */
+  /* padding-right: 5px; */
+  color: #fff;
+  text-decoration: none;
+  width: 16px;
+  height: 16px;
+  object-position: center;
+  margin-right: 6px;
+}
+@media screen and (max-width: 450px) {
+  .projects__pointer {
+    width: 9px;
+    height: 9px;
+    margin: 0 5px 5px 0;
+  }
+}
