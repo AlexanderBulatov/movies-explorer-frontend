@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as auth from '../../../utils/auth';
 import logo from '../../../images/logo.svg';
 
-function Login({ signIn }) {
+function Login({ signIn, setCurrentUser }) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
@@ -23,10 +23,12 @@ function Login({ signIn }) {
       return;
     }
     auth.authorize(email, pass)
-      .then(() => {
-        navigate('/movies', { replace: true });
+      .then((serverRes) => {
         window.localStorage.setItem('isLoggedIn', 'true');
+        console.log('Это данные пользователя', serverRes);
+        setCurrentUser(serverRes);
         signIn();
+        navigate('/movies', { replace: true });
       })
       .catch((err) => {
         console.log('Login Erorr:', err);
@@ -99,4 +101,5 @@ export default Login;
 Login.propTypes = {
 
   signIn: PropTypes.func,
+  setCurrentUser: PropTypes.func,
 };

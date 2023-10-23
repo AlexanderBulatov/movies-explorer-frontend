@@ -29,7 +29,7 @@ function MoviesCard({ title, duration, cover }) {
 
 MoviesCard.propTypes = {
   title: PropTypes.string.isRequired,
-  duration: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
   cover: PropTypes.string.isRequired,
 };
 

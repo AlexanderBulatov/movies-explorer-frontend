@@ -15,7 +15,7 @@ class Api {
     return Promise.reject(new Error(`Error: ${serverAnswer.status}`));
   }
 
-  getInitialCards() {
+  getMovies() {
     return fetch(
       `${this._initUrlApi}/cards`,
       {
@@ -39,7 +39,7 @@ class Api {
       .then(this._answerHandle);
   }
 
-  setUserInfo(name, about) {
+  updateUserInfo(name, email) {
     return fetch(
       `${this._initUrlApi}/users/me`,
       {
@@ -50,7 +50,7 @@ class Api {
         },
         body: JSON.stringify({
           name,
-          about,
+          email,
         }),
       },
     )

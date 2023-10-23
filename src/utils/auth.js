@@ -4,6 +4,11 @@ function answerHandle(serverAnswer) {
   if (serverAnswer.ok) {
     return serverAnswer.json()
       .then((res) => res.data);
+    // serverAnswer.json()
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     return res.data;
+    //   });
   }
   return Promise.reject(new Error(`Error: ${serverAnswer.status}`));
 }
@@ -34,7 +39,13 @@ export const authorize = (email, password) => fetch(
     body: JSON.stringify({ email, password }),
   },
 )
-  .then(answerHandle);
+  .then((serverAnswer) => {
+    if (serverAnswer.ok) {
+      return serverAnswer.json()
+        .then((res) => res);
+    }
+    return Promise.reject(new Error(`Error: ${serverAnswer.status}`));
+  });
 
 export const signOut = () => fetch(
   `${REACT_APP_BASE_URL}/signout`,
