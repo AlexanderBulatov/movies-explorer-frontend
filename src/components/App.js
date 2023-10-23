@@ -26,6 +26,8 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(null);
   // const [initialFilms, setinitialFilms] = React.useState([]);
   const [filteredFilms, setFilteredFilms] = React.useState(null);
+  const [storedIdLikedList, setStoredIdLikedList] = React.useState([]);
+  // const [likesInfo, setLikesInfo] = React.useState(null);
   // const [renderPointer, setRenderPointer] = React.useState(0);
   // const [storedFilms, setStoredFilms] = React.useState([]);
   // const [hasMoreCards, setMoreCards] = React.useState(false);
@@ -36,14 +38,29 @@ function App() {
     console.log(err);
   };
 
-  const handleLoadLikedFilm = () => {
-    console.log('saved-films');
-    api.getMovies().then((res) => {
-      console.log(res);
-    })
-      .catch(handleError);
-  };
+  //--------------------------------------------
+  const handleDeleteFilm = (filmId) => api.deleteMovie(filmId).then(() => 'Ok')
+    .catch((err) => {
+      console.log(err);
+      return 'Bad';
+    });
 
+  const handleSetFilm = (film) => api.setFilm(film).then(() => 'Ok')
+    .catch((err) => {
+      console.log(err);
+      return 'Bad';
+    });
+
+  //--------------------------------------------
+  const handleLoadLikedFilms = () => api.getMovies().then((films) => {
+    console.log('получили понравившиеся, ', films);
+    return films;
+  })
+    .catch((err) => {
+      console.log(err);
+      return 'Bad';
+    });
+  // ---------------------
   const handleTokenCheck = () => {
     auth.checkToken().then((res) => {
       if (res) {
@@ -56,55 +73,55 @@ function App() {
     })
       .catch(handleError);
   };
-
+  // ---------------------
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
       handleTokenCheck();
     } else {
       setLoggedIn(false);
     }
+    api.getMovies().then((films) => {
+      console.log('получили для лайков, ', films);
+      setStoredIdLikedList(films.map((film) => film._id));
+      return films;
+    })
+      .catch((err) => {
+        console.log(err);
+        return 'Bad';
+      });
   }, []);
 
-  const handleSearchClick = (search, checkedShort) => {
-    if (JSON.parse(window.localStorage.getItem('initialUserFilms')).userId !== currentUser._id) {
-      getAllMovies()
-        .then((res) => {
-          window.localStorage.setItem('initialUserFilms', JSON.stringify({ userId: currentUser._id, initialFilms: res }));
-        })
-        .catch((err) => {
-          console.log('no films!', err);
-        });
-    }
-    const { initialFilms } = JSON.parse(window.localStorage.getItem('initialUserFilms'));
-    let findDuration = 0;
-    if (checkedShort) {
-      findDuration = 60;
-    } else {
-      findDuration = 60000;
-    }
-    const filteredArr = initialFilms.filter(
-      (film) => ((film.nameRU.toLowerCase()).indexOf(search.toLowerCase()) >= 0
-              || (film.nameEN.toLowerCase()).indexOf(search.toLowerCase()) >= 0)
-              && (film.duration < findDuration),
-    );
-    setFilteredFilms(filteredArr);
-    console.log('filteredArr', filteredArr);
-    if (filteredArr.length > 0) {
-      window.localStorage.setItem('filteredUserFilms', JSON.stringify({
-        userId: currentUser._id,
-        filteredFilms: filteredArr,
-        searchExpression: search,
-        checkboxState: checkedShort,
-      }));
-    }
-  };
+  useEffect(() => {
+    console.log(storedIdLikedList);
+  }, [storedIdLikedList]);
 
+  // ---------------------
+  // Promise.all([api.getUserInfo(), api.getInitialCards()])
+  //     .then(([userData, cards]) => {
+
+  // const handleGetAllMovies = () => getAllMovies().then((films) => {
+  //   console.log('получили всю базу, ', films);
+  //   return films;
+  // })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     return 'Bad';
+  //   });
+  const handleGetAllMovies = () => getAllMovies().then((films) => {
+    console.log('получили всю базу, ', films);
+    return films;
+  })
+    .catch((err) => {
+      console.log(err);
+      return 'Bad';
+    });
+  // ---------------------
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
       handleTokenCheck();
     }
   }, []);
-
+  // ---------------------
   const handleShortClick = (search, checkedShort) => {
     let findDuration = 0;
     if (checkedShort) {
@@ -146,10 +163,12 @@ function App() {
                 isSideMenuOpen={isSideMenuOpen}
                 isBlack={true} />,
               <Movies key="movies"
-                handleSearchClick = {handleSearchClick}
+                pathname = {pathname}
+                handleGetAllMovies = {handleGetAllMovies}
                 handleShortClick = {handleShortClick}
                 filteredFilms = {filteredFilms}
-                setFilteredFilms = {setFilteredFilms}/>,
+                setFilteredFilms = {setFilteredFilms}
+                handleSetFilm ={handleSetFilm}/>,
               <Footer key="footer" />]} />}
           />
           <Route path="/saved-movies" element={
@@ -159,9 +178,12 @@ function App() {
                 onBurger={() => setSideMenuOpen(true)}
                 isSideMenuOpen={isSideMenuOpen}
                 isBlack={true} />,
-              <Movies key="movies"
-                pathName = {pathname}
-                handleLoadLikedFilm = {handleLoadLikedFilm} />,
+              <Movies key="saved-movies"
+                // pathname = {pathname}
+                filteredFilms = {filteredFilms}
+                setFilteredFilms = {setFilteredFilms}
+                handleLoadLikedFilms = {handleLoadLikedFilms}
+                handleDeleteFilm = {handleDeleteFilm} />,
               <Footer key="footer" />]} />}
           />
           <Route path="/profile" element={

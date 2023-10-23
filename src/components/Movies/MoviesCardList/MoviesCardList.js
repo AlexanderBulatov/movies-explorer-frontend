@@ -6,13 +6,28 @@ import renderMoviePanel from './renderMoviePanel';
 import { REACT_APP_COVER_URL } from '../../../utils/config';
 import DebugView from '../../SidePopup/DebugView';
 
-function MoviesCardList({ moviesList }) {
+function MoviesCardList({
+  moviesList, setMoviesList, handleLikeFilm, handleDeleteFilm,
+}) {
   const { pathname } = useLocation();
   // const [initialFilms, setinitialFilms] = React.useState([]);
   const [filmsForRender, setFilmsForRender] = React.useState([]);
   const [renderPointer, setRenderPointer] = React.useState(0);
   // const [allFilteredFilms, setAllFilteredFilms] = React.useState([]);
   const [hasMoreCards, setMoreCards] = React.useState(false);
+
+  // ----------handleDeleteFilm-------------------
+  function handleDeleteRenderedItem(film) {
+    handleDeleteFilm(film._id).then((res) => {
+      if (res === 'Ok') {
+        console.log('все получилось');
+        setMoviesList((state) => state.filter(
+          (moviesFromState) => moviesFromState._id !== film._id,
+        ));
+        setFilmsForRender(moviesList);
+      }
+    });
+  }
 
   // --- window resizing----------------------------
   function getWindowSize() {
@@ -23,7 +38,7 @@ function MoviesCardList({ moviesList }) {
   const [windowSize, setWindowSize] = React.useState(getWindowSize());
 
   useEffect(() => {
-    console.log('first load', moviesList);
+
   }, []);
 
   useEffect(() => {
@@ -44,16 +59,16 @@ function MoviesCardList({ moviesList }) {
   // ----------------- end of resizing-----------------------
   // ----------
   useEffect(() => {
-    if (pathname === '/saved-movies') {
-      setRenderPointer(0);
-      setFilmsForRender([]);
-    }
+    setRenderPointer(0);
+    setFilmsForRender([]);
+
     console.log('here founded-movies', moviesList);
   }, [pathname]);
 
   useEffect(() => {
-    console.log('use moviesList', moviesList);
     if (pathname === '/movies') {
+      console.log('use moviesList', moviesList);
+      // if (pathname === '/movies') {
       setRenderPointer(0);
       setFilmsForRender([]);
       renderMoviePanel(
@@ -64,7 +79,11 @@ function MoviesCardList({ moviesList }) {
         setRenderPointer,
         setFilmsForRender,
       );
+    } else {
+      setFilmsForRender(moviesList);
+      console.log('no!');
     }
+    // }
   }, [moviesList, pathname]);
 
   function handleClickMore() {
@@ -82,14 +101,16 @@ function MoviesCardList({ moviesList }) {
 
     <section className = "movies__panel">
       <ul className="movies__list">
-      { (pathname === '/movies') ? filmsForRender.map((film) => (
-              <MoviesCard key={film.id}
+      {filmsForRender.map((film) => (
+              <MoviesCard key={film._id}
                 title={film.nameRU}
                 duration={film.duration}
-                cover={`${REACT_APP_COVER_URL}${film.image.url}`}
+                cover={(pathname === '/saved-movies') ? `${film.image}` : `${REACT_APP_COVER_URL}${film.image.url}`}
+                handleLikeFilm ={handleLikeFilm}
+                handleDeleteFilm = {handleDeleteRenderedItem}
+                film = {film}
               />
-      )) : null
-      }
+      ))}
       </ul>
       <button className={`movies__more-bttn ${!hasMoreCards ? 'movies__more-bttn_hidden' : ''}`} type="button" onClick={handleClickMore}>Еще</button>
       <DebugView varArray={[
@@ -105,4 +126,7 @@ export default MoviesCardList;
 
 MoviesCardList.propTypes = {
   moviesList: PropTypes.array,
+  handleLikeFilm: PropTypes.func.isRequired,
+  handleDeleteFilm: PropTypes.func.isRequired,
+  setMoviesList: PropTypes.func.isRequired,
 };

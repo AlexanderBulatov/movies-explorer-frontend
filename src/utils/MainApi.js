@@ -1,4 +1,4 @@
-const { REACT_APP_BASE_URL } = require('./config');
+const { REACT_APP_BASE_URL, REACT_APP_COVER_URL } = require('./config');
 
 class Api {
   constructor(apiConfig) {
@@ -17,7 +17,7 @@ class Api {
 
   getMovies() {
     return fetch(
-      `${this._initUrlApi}/cards`,
+      `${this._initUrlApi}/movies`,
       {
         credentials: 'include',
         headers: {
@@ -91,9 +91,9 @@ class Api {
 
   //---------------------
 
-  setCard(name, link) {
+  setFilm(film) {
     return fetch(
-      `${this._initUrlApi}/cards`,
+      `${this._initUrlApi}/movies`,
       {
         credentials: 'include',
         method: 'POST',
@@ -101,17 +101,26 @@ class Api {
           'Content-Type': this._contentType,
         },
         body: JSON.stringify({
-          name,
-          link,
+          country: film.country,
+          director: film.director,
+          duration: film.duration,
+          year: film.year,
+          description: film.description,
+          image: `${REACT_APP_COVER_URL}${film.image.url}`,
+          trailerLink: film.trailerLink,
+          thumbnail: `${REACT_APP_COVER_URL}${film.image.formats.thumbnail.url}`,
+          nameRU: film.nameRU,
+          nameEN: film.nameEN,
+          movieId: film.id,
         }),
       },
     )
       .then(this._answerHandle);
   }
 
-  deleteCard(cardId) {
+  deleteMovie(movieId) {
     return fetch(
-      `${this._initUrlApi}/cards/${cardId}`,
+      `${this._initUrlApi}/movies/${movieId}`,
       {
         credentials: 'include',
         method: 'DELETE',
