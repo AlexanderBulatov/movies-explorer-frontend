@@ -1,40 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as auth from '../../../utils/auth';
 import logo from '../../../images/logo.svg';
+import useFormAndValidation from '../../../utils/customHooks/useFormAndValidation';
 
 function Login({ signIn, setCurrentUser }) {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePassChange(e) {
-    setPass(e.target.value);
-  }
   const navigate = useNavigate();
+  const [submitErrorMessage, setSubmitErrorMessage] = React.useState('');
+  const [wasSubmitError, setWasSubmitError] = React.useState(false);
+  // const [dataInputError, setDataInputError] = React.useState({email: '', pass: ''});
+
+  const {
+    values, handleChange, errors, isValid, setValues, resetForm,
+  } = useFormAndValidation(null);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!pass || !email) {
+    resetForm();
+    setValues({ name: values.name, email: values.email });
+    if (!values.pass || !values.email) {
       return;
     }
-    auth.authorize(email, pass)
+    auth.authorize(values.email, values.pass)
       .then((serverRes) => {
         window.localStorage.setItem('isLoggedIn', 'true');
-        console.log('Это данные пользователя', serverRes);
         setCurrentUser(serverRes);
         signIn();
         navigate('/movies', { replace: true });
       })
       .catch((err) => {
-        console.log('Login Erorr:', err);
-        // props.hanldeInfoTooltipError();
+        setSubmitErrorMessage(err.message);
       });
   }
+
+  useEffect(() => {
+    if ((submitErrorMessage !== '')) {
+      setWasSubmitError(true);
+    }
+  }, [submitErrorMessage]);
+
+  useEffect(() => {
+    if (wasSubmitError) setSubmitErrorMessage('');
+  }, [values]);
+
+  useEffect(() => {
+    resetForm();
+    setValues({ email: '', pass: '' });
+  }, []);
 
   return (
     <main className="page__content">
@@ -64,11 +77,10 @@ function Login({ signIn, setCurrentUser }) {
               className="sign__input sign__input_type_email"
               required
               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
-              onChange={handleEmailChange}
-              value={email}
+              onChange={handleChange}
+              value={values.email}
             />
-            <span className="error sign__error sign__error_type_name">Имя должно быть от 2 до 200 симоволов
-            </span>
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.email}</span>
             <label className="sign__label">Пароль</label>
             <input
               id="pass-login"
@@ -80,12 +92,12 @@ function Login({ signIn, setCurrentUser }) {
               required
               minLength="2"
               maxLength="200"
-              onChange={handlePassChange}
-              value={pass}
+              onChange={handleChange}
+              value={values.pass}
             />
-            <span className="error sign__error sign__error_type_pass
-                error_active">Что-то пошло не так...</span>
-            <button type="submit" className="page-bttn sign__submit-bttn">Войти</button>
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.pass}</span>
+            <span className= {`error sign__submit-err ${!(submitErrorMessage === '') ? 'sign__submit-err_show' : ''}`}>{submitErrorMessage}</span>
+            <button type="submit" className= {`page-bttn sign__submit-bttn ${!isValid ? 'sign__submit-bttn_disabled' : ''}`}>Войти</button>
           </form>
           <p className="sign__login">Ещё не зарегистрированы?&ensp;
             <Link to="/signup" className="link sign__link" >Регистрация</Link>

@@ -31,11 +31,11 @@ function Header({
   );
 }
 Header.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool,
   onBurger: PropTypes.func,
   onLogin: PropTypes.func,
-  isSideMenuOpen: PropTypes.bool.isRequired,
-  isBlack: PropTypes.bool.isRequired,
+  isSideMenuOpen: PropTypes.bool,
+  isBlack: PropTypes.bool,
 };
 
 export default Header;

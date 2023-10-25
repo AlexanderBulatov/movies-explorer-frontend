@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import api from '../../utils/MainApi';
 import * as auth from '../../utils/auth';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import DebugView from '../SidePopup/DebugView';
+// import DebugView from '../SidePopup/DebugView';
+import useFormAndValidation from '../../utils/customHooks/useFormAndValidation';
 
 function Profile({ setLoggedInFalse, setCurrentUser }) {
   const navigate = useNavigate();
   const currentUser = React.useContext(CurrentUserContext);
   const [editingProfile, setEditingProfile] = React.useState(false);
-  const [updatingErr, setUpdatingErr] = React.useState(false);
-  const [userName, setUserName] = useState(currentUser.name);
-  const [email, setEmail] = useState(currentUser.email);
+  const [submitMessage, setSubmitMessage] = React.useState('');
+  // const [wasSubmit, setWasSubmit] = React.useState(false);
 
-  function handleUserNameChange(e) {
-    setUserName(e.target.value);
-  }
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
+  const {
+    values, handleChange, errors, isValid, setValues, resetForm,
+  } = useFormAndValidation(currentUser);
+
+  useEffect(() => {
+    resetForm();
+    setValues({ name: currentUser.name, email: currentUser.email });
+  }, []);
 
   function handleSignOut() {
     auth.signOut().then(() => {
@@ -35,22 +37,45 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    api.updateUserInfo(userName, email)
+    resetForm();
+    setValues({ name: values.name, email: values.email });
+    api.updateUserInfo(values.name, values.email)
       .then(() => {
-        setCurrentUser({ name: userName, email });
-        setEditingProfile(false);
+        setCurrentUser({ name: values.name, email: values.email });
+        setSubmitMessage('Данные успешно обновлены');
+        // setTimeout(() => {
+        //   setEditingProfile(false);
+        // }, 10000);
       })
       .catch((err) => {
-        console.log('Login Erorr:', err);
-        setUpdatingErr(true);
+        setSubmitMessage(err.message);
       });
   }
+
+  useEffect(() => {
+    // if (submitMessage === 'Данные успешно обновлены') {
+    setTimeout(() => {
+      setEditingProfile(false);
+    }, 2500);
+    // }
+    // if (submitMessage !== '') { setWasSubmit(true); }
+  }, [submitMessage]);
+
+  // useEffect(() => {
+  //   if (wasSubmit) { setSubmitMessage(''); setWasSubmit(false); }
+  // }, [values]);
+
+  useEffect(() => {
+    setSubmitMessage('');
+    setValues({ name: currentUser.name, email: currentUser.email });
+    // setWasSubmit(false);
+  }, [editingProfile]);
 
   return (
     <main className="page__content">
       <section className="profile page__partition page__partition_grow page__partition_color_black">
         <div className="profile__content">
-          <h1 className="page-title profile__title">Привет, {currentUser._id}!</h1>
+          <h1 className="page-title profile__title">Привет, {currentUser.name}!</h1>
           <form className="profile__info" name="profile-form" disabled autoComplete="off" noValidate>
             <div className="profile__info-row">
               <label className="profile__attribute">Имя</label>
@@ -64,36 +89,45 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
                 required
                 pattern="[\-a-zA-Zа-яёА-ЯЁ ]{2,30}"
                 disabled = {!editingProfile}
-                onChange={handleUserNameChange}
-                value={userName}
+                onChange={ handleChange}
+                value={values.name}
               />
             </div>
-            <span className="error profile__error profile__error_type_name">Что-то пошло не так</span>
+            <span className={`error profile__error profile__error_type_name ${!isValid ? 'profile__error_show' : ''}`}>{errors.name}</span>
             <div className="profile__info-row">
               <label className="profile__attribute">E-mail</label>
               <input
                 id="profile-email"
-                type="text"
-                name="pass"
+                type="email"
+                name="email"
                 required
                 pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
                 placeholder="123@123.com"
                 className="profile__input"
                 disabled = {!editingProfile}
                 autoComplete="off"
-                onChange={handleEmailChange}
-                value={email}
+                onChange={ handleChange}
+                value={values.email}
               />
             </div>
-            <span className="error profile__error profile__error_type_email">Не так что-то пошло</span>
+            <span className={`error profile__error profile__error_type_name ${!isValid ? 'profile__error_show' : ''}`}>{errors.email}</span>
 
+            {/* {submitErrorMessage !== ''
+              && <span className={`profile__save-error profile__error_type_save
+              ${submitErrorMessage !== '' ? 'profile__save-error_show' : ''}`}>
+                {submitErrorMessage}
+              </span>} */}
+               <span className={`error profile__save-error ${(submitMessage !== '') ? 'profile__save-error_show' : ''}`}>
+                {'Возврат через 3 секунды...'}
+              </span>
+               <span className={`error profile__save-error ${(submitMessage !== '') ? 'profile__save-error_show' : ''}`}>
+                {`${submitMessage}`}
+              </span>
             {editingProfile
-              && <span className={`error profile__save-error profile__error_type_save ${updatingErr ? 'error_active' : ''}`}>
-                При обновлении профиля произошла ошибка.
-              </span>}
-            {editingProfile
-              && <button className="page-bttn profile__save-bttn" type="submit" onClick={handleSubmit}>Сохранить</button>}
-
+              && <button
+                className={`page-bttn profile__save-bttn ${!isValid ? 'profile__save-bttn_disabled' : ''}`}
+                type="submit"
+                onClick={handleSubmit}>Сохранить</button>}
           </form>
 
           {!editingProfile
@@ -104,13 +138,12 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
         </div>
       </section>
 
-      <DebugView varArray={[
-        { varName: 'updatingErr', varValue: `${updatingErr}` },
-        { varName: 'isloggedIn', varValue: `${window.localStorage.getItem('isLoggedIn')}` },
-        { varName: 'currentUser', varValue: `${currentUser.email}` },
-        { varName: 'inputName', varValue: `${userName}` },
-        { varName: 'inpuEmail', varValue: `${email}` },
-        { varName: 'editingProfile', varValue: `${editingProfile}` }]} />
+      {/* <DebugView varArray={[
+        { varName: 'submitMessage', varValue: `${submitMessage}` },
+        { varName: 'currentUser', varValue: `${currentUser.email}, ${currentUser.name}` },
+        { varName: 'inputName', varValue: `${values.name}` },
+        { varName: 'inpuEmail', varValue: `${values.email}` },
+        { varName: 'editingProfile', varValue: `${editingProfile}` }]} /> */}
     </main>
 
   );

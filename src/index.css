@@ -24,5 +24,6 @@
 @import url(./components/Footer/Footer.css);
 @import url(./components/Profile/Profile.css);
 @import url(./components/Sign/Register/Register.css);
-@import url(./components/Sign/Login/Login.css);
+/* @import url(./components/Sign/Login/Login.css); */
 @import url(./components/Page404/Page404.css);
+@import url(./components/Movies/NoResult/NoResult.css);

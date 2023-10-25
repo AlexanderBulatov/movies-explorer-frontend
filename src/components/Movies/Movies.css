@@ -35,3 +35,8 @@
   width: 30%
 }
 
+.movies__no-result{
+  margin: 0 auto;
+  /* max-width: 1140px; */
+  width: 30%
+}

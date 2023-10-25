@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import renderMoviePanel from './renderMoviePanel';
+import useWindowSize from '../../../utils/customHooks/useWindowSize';
 import { REACT_APP_COVER_URL } from '../../../utils/config';
-import DebugView from '../../SidePopup/DebugView';
+// import DebugView from '../../SidePopup/DebugView';
 
 function MoviesCardList({
-  moviesList, setMoviesList, handleLikeFilm, handleDeleteFilm,
+  moviesList, setMoviesList, handleSetFilm, handleDeleteFilm, storedIdLikedList,
+  setStoredIdLikedList,
 }) {
   const { pathname } = useLocation();
   // const [initialFilms, setinitialFilms] = React.useState([]);
+  const [isLiked, setLiked] = React.useState(false);
   const [filmsForRender, setFilmsForRender] = React.useState([]);
   const [renderPointer, setRenderPointer] = React.useState(0);
   // const [allFilteredFilms, setAllFilteredFilms] = React.useState([]);
@@ -18,6 +21,7 @@ function MoviesCardList({
 
   // ----------handleDeleteFilm-------------------
   function handleDeleteRenderedItem(film) {
+    console.log(isLiked);
     handleDeleteFilm(film._id).then((res) => {
       if (res === 'Ok') {
         console.log('все получилось');
@@ -25,50 +29,37 @@ function MoviesCardList({
           (moviesFromState) => moviesFromState._id !== film._id,
         ));
         setFilmsForRender(moviesList);
+        setStoredIdLikedList((state) => state.filter(
+          (filmIdFromState) => filmIdFromState._id !== film._id,
+        ));
       }
     });
   }
-
-  // --- window resizing----------------------------
-  function getWindowSize() {
-    const { innerWidth, innerHeight } = window;
-    return { innerWidth, innerHeight };
+  // ----------handleDelete-LikeFilm-------------------
+  function handleLikeFilm(isLiked, film) {
+    if (!isLiked) {
+      handleSetFilm(film).then((res) => {
+        if (res.msg !== 'Bad') {
+          setStoredIdLikedList([{ _id: res.data._id, id: res.data.movieId }, ...storedIdLikedList]);
+        }
+      });
+    } else {
+      const [filmForDelete] = storedIdLikedList.filter((filmId) => filmId.id === film.id);
+      handleDeleteFilm(filmForDelete._id).then((res) => {
+        if (res === 'Ok') {
+          setStoredIdLikedList((state) => state.filter(
+            (filmIdFromState) => filmIdFromState.id !== film.id,
+          ));
+        }
+      });
+    }
   }
 
-  const [windowSize, setWindowSize] = React.useState(getWindowSize());
-
-  useEffect(() => {
-
-  }, []);
-
-  useEffect(() => {
-    let timeout;
-
-    function handleWindowResize() {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        setWindowSize(getWindowSize());
-      }, 1000);
-    }
-
-    window.addEventListener('resize', handleWindowResize);
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-  // ----------------- end of resizing-----------------------
-  // ----------
-  useEffect(() => {
-    setRenderPointer(0);
-    setFilmsForRender([]);
-
-    console.log('here founded-movies', moviesList);
-  }, [pathname]);
+  // --- window resizing----------------------------
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     if (pathname === '/movies') {
-      console.log('use moviesList', moviesList);
-      // if (pathname === '/movies') {
       setRenderPointer(0);
       setFilmsForRender([]);
       renderMoviePanel(
@@ -81,9 +72,7 @@ function MoviesCardList({
       );
     } else {
       setFilmsForRender(moviesList);
-      console.log('no!');
     }
-    // }
   }, [moviesList, pathname]);
 
   function handleClickMore() {
@@ -102,22 +91,26 @@ function MoviesCardList({
     <section className = "movies__panel">
       <ul className="movies__list">
       {filmsForRender.map((film) => (
-              <MoviesCard key={film._id}
+              <MoviesCard key={film.id || film._id}
                 title={film.nameRU}
                 duration={film.duration}
                 cover={(pathname === '/saved-movies') ? `${film.image}` : `${REACT_APP_COVER_URL}${film.image.url}`}
+                trailerLink={film.trailerLink}
                 handleLikeFilm ={handleLikeFilm}
                 handleDeleteFilm = {handleDeleteRenderedItem}
                 film = {film}
+                isLiked = {(pathname === '/movies') ? storedIdLikedList.some((storedId) => storedId.id === film.id) : false}
+                setLiked = {setLiked}
               />
       ))}
       </ul>
       <button className={`movies__more-bttn ${!hasMoreCards ? 'movies__more-bttn_hidden' : ''}`} type="button" onClick={handleClickMore}>Еще</button>
-      <DebugView varArray={[
-        { varName: 'renderPointer', varValue: `${renderPointer}` },
-        { varName: 'hasMoreCards', varValue: `${hasMoreCards}` },
-        { varName: 'filmsForRender', varValue: `${windowSize.innerWidth} | ${filmsForRender.length}` },
-        { varName: 'filteredFilms', varValue: `| ${moviesList}` }]} />
+      {/* <DebugView varArray={[
+        { varName: 'cardListSize', varValue: `${windowSize.innerWidth}` },
+        { varName: 'windowSize.innerWidth', varValue: `${windowSize.innerWidth}` },
+        { varName: 'filmsForRender', varValue:
+        `${windowSize.innerWidth} | ${filmsForRender.length}` },
+        { varName: 'filteredFilms', varValue: `| ${moviesList}` }]} /> */}
     </section>
   );
 }
@@ -126,7 +119,9 @@ export default MoviesCardList;
 
 MoviesCardList.propTypes = {
   moviesList: PropTypes.array,
-  handleLikeFilm: PropTypes.func.isRequired,
-  handleDeleteFilm: PropTypes.func.isRequired,
-  setMoviesList: PropTypes.func.isRequired,
+  handleSetFilm: PropTypes.func,
+  handleDeleteFilm: PropTypes.func,
+  setMoviesList: PropTypes.func,
+  storedIdLikedList: PropTypes.array,
+  setStoredIdLikedList: PropTypes.func,
 };

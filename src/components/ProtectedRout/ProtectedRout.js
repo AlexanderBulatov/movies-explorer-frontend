@@ -6,7 +6,6 @@ import { Navigate } from 'react-router-dom';
 
 function ProtectedRoute({ element: componentsArray, loggedIn }) {
   if (loggedIn === null) {
-    console.log('null');
     return null;
   }
 

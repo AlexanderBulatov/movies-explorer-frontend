@@ -1,57 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as auth from '../../../utils/auth';
 import logo from '../../../images/logo.svg';
-
-const { REACT_APP_BASE_URL } = require('../../../utils/config');
+import useFormAndValidation from '../../../utils/customHooks/useFormAndValidation';
 
 function Registr() {
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-
-  function handleUserNameChange(e) {
-    console.log(`userName before: ${REACT_APP_BASE_URL}`);
-    setUserName(e.target.value);
-    console.log(`value ${e.target.value}`);
-    setTimeout(() => console.log(`userName after ${userName}`), 1000);
-  }
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePassChange(e) {
-    setPass(e.target.value);
-  }
-
-  // function handleEmailChange(e) {
-  //   setEmail(e.target.value);
-  // }
-
-  // function handlePassChange(e) {
-  //   setPass(e.target.value);
-  // }
-
-  // function handleSubmit(e){
-  //   e.preventDefault();
-  //   props.onSubmit(email, pass);
-  // }
+  const [submitErrorMessage, setSubmitErrorMessage] = React.useState('');
+  const [wasSubmitError, setWasSubmitError] = React.useState(false);
 
   const navigate = useNavigate();
 
+  const {
+    values, handleChange, errors, isValid, setValues, resetForm,
+  } = useFormAndValidation(null);
+
   function handleSubmit(e) {
+    resetForm();
+    setValues({ name: values.name, email: values.email });
+    console.log(values);
     e.preventDefault();
-    auth.register(userName, email, pass)
+    auth.register(values.name, values.email, values.pass)
       .then(() => {
-        // props.hanldeInfoTooltipOk();
-        console.log('Register ok!');
         navigate('/signin', { replace: true });
       })
       .catch((err) => {
-        // props.hanldeInfoTooltipError();
-        console.log('Register error', err);
+        setSubmitErrorMessage(err.message);
       });
   }
+
+  useEffect(() => {
+    if ((submitErrorMessage !== '')) {
+      setWasSubmitError(true);
+    }
+  }, [submitErrorMessage]);
+
+  useEffect(() => {
+    if (wasSubmitError) setSubmitErrorMessage('');
+  }, [values]);
+
+  useEffect(() => {
+    resetForm();
+    setValues({ name: '', email: '', pass: '' });
+  }, []);
 
   return (
     <main className="page__content">
@@ -81,11 +71,10 @@ function Registr() {
               className="sign__input sign__input_type_name"
               required
               pattern="[\-a-zA-Zа-яёА-ЯЁ ]{2,30}"
-              onChange={handleUserNameChange}
-              value={userName}
+              onChange={handleChange}
+              value={values.name}
             />
-            <span className="error sign__error sign__error_type_name
-                ">Имя должно быть от 2 до 200 симоволов
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}> {errors.name}
             </span>
             <label className="sign__label">E-mail</label>
             <input
@@ -97,10 +86,9 @@ function Registr() {
               className="sign__input sign__input_type_email"
               required
               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
-              onChange={handleEmailChange}
-              value={email}
-            />
-            <span className="error sign__error sign__error_type_email">Укажите электронну почту
+              onChange={handleChange}
+              value={values.email}/>
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.email}
             </span>
             <label className="sign__label">Пароль</label>
             <input
@@ -113,12 +101,11 @@ function Registr() {
               required
               minLength="2"
               maxLength="200"
-              onChange={handlePassChange}
-              value={pass}
-            />
-            <span className="error sign__error sign__error_type_pass
-                error_active">Что-то пошло не так...</span>
-            <button type="submit" className="page-bttn sign__submit-bttn">Зарегистрироваться</button>
+              onChange={handleChange}
+              value={values.pass}/>
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.pass}</span>
+            <span className= {`error sign__submit-err ${!(submitErrorMessage === '') ? 'sign__submit-err_show' : ''}`}>{submitErrorMessage}</span>
+            <button type="submit" className= {`page-bttn sign__submit-bttn ${!isValid ? 'sign__submit-bttn_disabled' : ''}`}>Зарегистрироваться</button>
           </form>
           <p className="sign__login">Уже зарегистрированы?&ensp;
             <Link to="/signin" className="link sign__link" >Войти</Link>

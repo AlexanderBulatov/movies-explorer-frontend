@@ -54,7 +54,16 @@ class Api {
         }),
       },
     )
-      .then(this._answerHandle);
+      .then((serverAnswer) => {
+        if (serverAnswer.ok) {
+          return serverAnswer.json()
+            .then((res) => res.data);
+        }
+        if (serverAnswer.status === 409) {
+          return Promise.reject(new Error('Пользователь с таким email уже существует'));
+        }
+        return serverAnswer.json().then((res) => Promise.reject(new Error(`При обновлении профиля произошла ошибка: ${res.message}`)));
+      });
   }
 
   setLike(cardId) {

@@ -15,14 +15,13 @@ function renderMoviePanel(
     numCardForRender = 2;
   } else if (windowWidth < 901) {
     initialNumCards = 8;
-    numCardForRender = 4;
+    numCardForRender = 2;
   } else {
     initialNumCards = 12;
-    numCardForRender = 6;
+    numCardForRender = 3;
   }
 
   const restForRender = allFilteredFilms.length - renderPointer;
-  console.log('restForRender = ', restForRender);
   if (renderPointer === 0) {
     if (restForRender <= initialNumCards) {
       chunkSize = restForRender;
@@ -40,8 +39,6 @@ function renderMoviePanel(
     chunkSize = numCardForRender;
     handleSetMoreCards(true);
   }
-  console.log('numCardForRender', numCardForRender);
-  console.log('chunkSize', chunkSize);
   for (let i = 0; i < chunkSize; i += 1) {
     tempArray.push(allFilteredFilms[i + renderPointer]);
   }

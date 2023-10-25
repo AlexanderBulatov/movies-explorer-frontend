@@ -25,7 +25,16 @@ export const register = (userName, email, password) => fetch(`${REACT_APP_BASE_U
     password,
   }),
 })
-  .then(answerHandle);
+  .then((serverAnswer) => {
+    if (serverAnswer.ok) {
+      return serverAnswer.json()
+        .then((res) => res);
+    }
+    if (serverAnswer.status === 409) {
+      return Promise.reject(new Error('Пользователь с таким email уже существует'));
+    }
+    return serverAnswer.json().then((res) => Promise.reject(new Error(`При регистрации пользователя произошла ошибка: ${res.message}`)));
+  });
 
 export const authorize = (email, password) => fetch(
   `${REACT_APP_BASE_URL}/signin`,
@@ -44,7 +53,10 @@ export const authorize = (email, password) => fetch(
       return serverAnswer.json()
         .then((res) => res);
     }
-    return Promise.reject(new Error(`Error: ${serverAnswer.status}`));
+    if (serverAnswer.status === 401) {
+      return Promise.reject(new Error('Вы ввели неправильный логин или пароль.'));
+    }
+    return serverAnswer.json().then((res) => Promise.reject(new Error(`Возникла ошибка: ${res.message}`)));
   });
 
 export const signOut = () => fetch(

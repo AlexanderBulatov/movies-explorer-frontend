@@ -2,32 +2,29 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function SearchForm({ handleSearchClick, handleShortClick, searchSettings }) {
+function SearchForm({ handleSearchClick, searchSettings }) {
   const { pathname } = useLocation();
 
   const [checkedShort, setCheckedShort] = React.useState(false);
   const [search, setSearch] = React.useState('');
-  const [searchExpression, setSearchExpression] = React.useState('');
+  const [placeHolder, setPlaceHolder] = React.useState('введите запрос');
+  // const [searchExpression, setSearchExpression] = React.useState('');
   useEffect(() => {
     setCheckedShort(false);
     setSearch('');
-    setSearchExpression('');
   }, [pathname]);
 
   useEffect(() => {
     if (searchSettings !== null) {
       setSearch(searchSettings.search);
-      setSearchExpression(searchSettings.search);
       setCheckedShort(searchSettings.checked);
     }
   }, [searchSettings]);
 
-  useEffect(() => console.log(pathname, checkedShort), []);
-
   const handleChangeCheckbox = () => {
-    if (!/^\s*$/.test(searchExpression)) {
-      handleShortClick(searchExpression, !checkedShort, setSearch);
-    }
+    if (!/^\s*$/.test(search)) {
+      handleSearchClick(search, !checkedShort, setSearch);
+    } else setPlaceHolder('Пустой запрос. Введите ключевое слово');
     setCheckedShort(!checkedShort);
   };
 
@@ -37,8 +34,9 @@ function SearchForm({ handleSearchClick, handleShortClick, searchSettings }) {
 
   function handleClick(e) {
     e.preventDefault();
-    handleSearchClick(search, checkedShort);
-    setSearchExpression(search);
+    if (!/^\s*$/.test(search)) {
+      handleSearchClick(search, checkedShort);
+    } else setPlaceHolder('Пустой запрос. Введите ключевое слово');
   }
 
   return (
@@ -49,7 +47,7 @@ function SearchForm({ handleSearchClick, handleShortClick, searchSettings }) {
             id="search"
             type="text"
             name="movie-search"
-            placeholder="search"
+            placeholder={placeHolder}
             className="search__input"
             required
             onChange={handleChangeSearch}
@@ -78,5 +76,5 @@ export default SearchForm;
 SearchForm.propTypes = {
   handleSearchClick: PropTypes.func,
   handleShortClick: PropTypes.func,
-  searchSettings: PropTypes.array,
+  searchSettings: PropTypes.object,
 };

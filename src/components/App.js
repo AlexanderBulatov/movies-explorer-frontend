@@ -41,21 +41,18 @@ function App() {
   //--------------------------------------------
   const handleDeleteFilm = (filmId) => api.deleteMovie(filmId).then(() => 'Ok')
     .catch((err) => {
-      console.log(err);
+      console.log(filmId, err);
       return 'Bad';
     });
 
-  const handleSetFilm = (film) => api.setFilm(film).then(() => 'Ok')
+  const handleSetFilm = (film) => api.setFilm(film).then((storedFilm) => ({ data: storedFilm, msg: 'Ok' }))
     .catch((err) => {
       console.log(err);
-      return 'Bad';
+      return { data: null, msg: 'Bad' };
     });
 
   //--------------------------------------------
-  const handleLoadLikedFilms = () => api.getMovies().then((films) => {
-    console.log('получили понравившиеся, ', films);
-    return films;
-  })
+  const handleLoadLikedFilms = () => api.getMovies().then((films) => films)
     .catch((err) => {
       console.log(err);
       return 'Bad';
@@ -73,7 +70,8 @@ function App() {
     })
       .catch(handleError);
   };
-  // ---------------------
+  // -------------------------------------------------------------------------------------
+  // .....................................................................................
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
       handleTokenCheck();
@@ -81,8 +79,7 @@ function App() {
       setLoggedIn(false);
     }
     api.getMovies().then((films) => {
-      console.log('получили для лайков, ', films);
-      setStoredIdLikedList(films.map((film) => film._id));
+      setStoredIdLikedList(films.map((film) => ({ _id: film._id, id: film.movieId })));
       return films;
     })
       .catch((err) => {
@@ -91,22 +88,6 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(storedIdLikedList);
-  }, [storedIdLikedList]);
-
-  // ---------------------
-  // Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([userData, cards]) => {
-
-  // const handleGetAllMovies = () => getAllMovies().then((films) => {
-  //   console.log('получили всю базу, ', films);
-  //   return films;
-  // })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     return 'Bad';
-  //   });
   const handleGetAllMovies = () => getAllMovies().then((films) => {
     console.log('получили всю базу, ', films);
     return films;
@@ -136,8 +117,6 @@ function App() {
               && (film.duration < findDuration),
     );
     setFilteredFilms(filteredArr);
-
-    console.log('filteredArr', filteredArr);
     if (filteredArr.length > 0) {
       window.localStorage.setItem('filteredUserFilms', JSON.stringify({
         userId: currentUser._id,
@@ -168,7 +147,10 @@ function App() {
                 handleShortClick = {handleShortClick}
                 filteredFilms = {filteredFilms}
                 setFilteredFilms = {setFilteredFilms}
-                handleSetFilm ={handleSetFilm}/>,
+                storedIdLikedList = {storedIdLikedList}
+                setStoredIdLikedList = {setStoredIdLikedList}
+                handleSetFilm ={handleSetFilm}
+                handleDeleteFilm = {handleDeleteFilm}/>,
               <Footer key="footer" />]} />}
           />
           <Route path="/saved-movies" element={
@@ -183,6 +165,8 @@ function App() {
                 filteredFilms = {filteredFilms}
                 setFilteredFilms = {setFilteredFilms}
                 handleLoadLikedFilms = {handleLoadLikedFilms}
+                storedIdLikedList = {storedIdLikedList}
+                setStoredIdLikedList = {setStoredIdLikedList}
                 handleDeleteFilm = {handleDeleteFilm} />,
               <Footer key="footer" />]} />}
           />

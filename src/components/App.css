@@ -107,7 +107,7 @@ body{
 
 .page__sign {
   min-height: 560px;
-  min-width: 396px;
+  width: 396px;
   display: flex;
   flex-direction: column;
   margin: 70px auto 0;

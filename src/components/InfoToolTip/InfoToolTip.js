@@ -29,5 +29,5 @@ function InfoToolTip() {
 
 export default InfoToolTip;
 // InfoToolTip.propTypes = {
-//   isInfoToolTipOpen: PropTypes.bool.isRequired,
+//   isInfoToolTipOpen: PropTypes.bool,
 // };

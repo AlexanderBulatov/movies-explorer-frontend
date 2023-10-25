@@ -28,7 +28,7 @@ function Navigation({ loggedIn, onBurger }) {
         </nav>}
       {!loggedIn
         && <nav className="navigation__authorisation">
-          <Link to="/signup" className="link navigation__reg" >{`Регистрация ${loggedIn}`}</Link>
+          <Link to="/signup" className="link navigation__reg" >Регистрация</Link>
           <Link to="/signin" className="navigation__login" >Войти</Link>
         </nav>}
     </div>
@@ -36,7 +36,7 @@ function Navigation({ loggedIn, onBurger }) {
 }
 
 Navigation.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool,
   onBurger: PropTypes.func,
   onLogin: PropTypes.func,
 };
