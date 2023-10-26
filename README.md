@@ -10,6 +10,6 @@ Frontend for Movies-Explorer project
  * https://github.com/AlexanderBulatov/movies-explorer-frontend/pull/2
 
 Ссылки на задеплоенный на сервере проект:
- * Фронт: http://moviexplorer.nomoredomainsrocks.ru
- * Бэк: http://api.moviexplorer.nomoredomainsrocks.ru
+ * Фронт: https://moviexplorer.nomoredomainsrocks.ru
+ * Бэк: https://api.moviexplorer.nomoredomainsrocks.ru
 

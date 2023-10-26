@@ -74,7 +74,7 @@ function App() {
     })
       .catch((err) => {
         setInfoToolTipOpen(true);
-        setInfoMsg({ isOk: false, msg: `Возможны проблемы с авторизацией. Не удалось получить ответ сервера: ${err}`, home: true });
+        setInfoMsg({ isOk: false, msg: `Возможны проблемы с авторизацией. Не удалось получить ответ сервера. Проверьте, что вы используете защищенное htts-соединение. ${err}`, home: true });
         return err;
       });
   };
