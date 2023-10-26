@@ -12,45 +12,35 @@ function MoviesCardList({
   setStoredIdLikedList,
 }) {
   const { pathname } = useLocation();
-  // const [initialFilms, setinitialFilms] = React.useState([]);
-  const [isLiked, setLiked] = React.useState(false);
   const [filmsForRender, setFilmsForRender] = React.useState([]);
   const [renderPointer, setRenderPointer] = React.useState(0);
-  // const [allFilteredFilms, setAllFilteredFilms] = React.useState([]);
   const [hasMoreCards, setMoreCards] = React.useState(false);
+  const INITIAL_RENDER_POINTER = 0;
 
   // ----------handleDeleteFilm-------------------
   function handleDeleteRenderedItem(film) {
-    console.log(isLiked);
-    handleDeleteFilm(film._id).then((res) => {
-      if (res === 'Ok') {
-        console.log('все получилось');
-        setMoviesList((state) => state.filter(
-          (moviesFromState) => moviesFromState._id !== film._id,
-        ));
-        setFilmsForRender(moviesList);
-        setStoredIdLikedList((state) => state.filter(
-          (filmIdFromState) => filmIdFromState._id !== film._id,
-        ));
-      }
+    handleDeleteFilm(film._id).then(() => {
+      setMoviesList((state) => state.filter(
+        (moviesFromState) => moviesFromState._id !== film._id,
+      ));
+      setFilmsForRender(moviesList);
+      setStoredIdLikedList((state) => state.filter(
+        (filmIdFromState) => filmIdFromState._id !== film._id,
+      ));
     });
   }
   // ----------handleDelete-LikeFilm-------------------
   function handleLikeFilm(isLiked, film) {
     if (!isLiked) {
       handleSetFilm(film).then((res) => {
-        if (res.msg !== 'Bad') {
-          setStoredIdLikedList([{ _id: res.data._id, id: res.data.movieId }, ...storedIdLikedList]);
-        }
+        setStoredIdLikedList([{ _id: res._id, id: res.movieId }, ...storedIdLikedList]);
       });
     } else {
       const [filmForDelete] = storedIdLikedList.filter((filmId) => filmId.id === film.id);
-      handleDeleteFilm(filmForDelete._id).then((res) => {
-        if (res === 'Ok') {
-          setStoredIdLikedList((state) => state.filter(
-            (filmIdFromState) => filmIdFromState.id !== film.id,
-          ));
-        }
+      handleDeleteFilm(filmForDelete._id).then(() => {
+        setStoredIdLikedList((state) => state.filter(
+          (filmIdFromState) => filmIdFromState.id !== film.id,
+        ));
       });
     }
   }
@@ -60,11 +50,11 @@ function MoviesCardList({
 
   useEffect(() => {
     if (pathname === '/movies') {
-      setRenderPointer(0);
+      setRenderPointer(INITIAL_RENDER_POINTER);
       setFilmsForRender([]);
       renderMoviePanel(
         moviesList,
-        0,
+        INITIAL_RENDER_POINTER,
         windowSize.innerWidth,
         setMoreCards,
         setRenderPointer,
@@ -100,7 +90,7 @@ function MoviesCardList({
                 handleDeleteFilm = {handleDeleteRenderedItem}
                 film = {film}
                 isLiked = {(pathname === '/movies') ? storedIdLikedList.some((storedId) => storedId.id === film.id) : false}
-                setLiked = {setLiked}
+                // setLiked = {setLiked}
               />
       ))}
       </ul>

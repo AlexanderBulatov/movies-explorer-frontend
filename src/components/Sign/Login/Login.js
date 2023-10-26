@@ -78,7 +78,7 @@ function Login({ signIn, setCurrentUser }) {
               required
               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
               onChange={handleChange}
-              value={values.email}
+              value={values.email || ''}
             />
             <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.email}</span>
             <label className="sign__label">Пароль</label>
@@ -93,7 +93,7 @@ function Login({ signIn, setCurrentUser }) {
               minLength="2"
               maxLength="200"
               onChange={handleChange}
-              value={values.pass}
+              value={values.pass || ''}
             />
             <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.pass}</span>
             <span className= {`error sign__submit-err ${!(submitErrorMessage === '') ? 'sign__submit-err_show' : ''}`}>{submitErrorMessage}</span>

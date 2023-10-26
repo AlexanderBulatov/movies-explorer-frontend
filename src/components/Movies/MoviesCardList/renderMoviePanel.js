@@ -10,15 +10,24 @@ function renderMoviePanel(
   let numCardForRender = 0;
   let chunkSize = 0;
   const tempArray = [];
-  if (windowWidth < 601) {
-    initialNumCards = 5;
-    numCardForRender = 2;
-  } else if (windowWidth < 901) {
-    initialNumCards = 8;
-    numCardForRender = 2;
+  const SMALL_SCREEN_W_PX = 600;
+  const INITIAL_CARDS_FOR_SMALL = 5;
+  const RENDER_CARDS_FOR_SMALL = 2;
+  const MEDIUM_SCREEN_W_PX = 900;
+  const INITIAL_CARDS_FOR_MEDIUM = 8;
+  const RENDER_CARDS_FOR_MEDIUM = 2;
+  const INITIAL_CARDS_FOR_WIDE = 12;
+  const RENDER_CARDS_FOR_WIDE = 3;
+
+  if (windowWidth <= (SMALL_SCREEN_W_PX)) {
+    initialNumCards = INITIAL_CARDS_FOR_SMALL;
+    numCardForRender = RENDER_CARDS_FOR_SMALL;
+  } else if (windowWidth <= MEDIUM_SCREEN_W_PX) {
+    initialNumCards = INITIAL_CARDS_FOR_MEDIUM;
+    numCardForRender = RENDER_CARDS_FOR_MEDIUM;
   } else {
-    initialNumCards = 12;
-    numCardForRender = 3;
+    initialNumCards = INITIAL_CARDS_FOR_WIDE;
+    numCardForRender = RENDER_CARDS_FOR_WIDE;
   }
 
   const restForRender = allFilteredFilms.length - renderPointer;

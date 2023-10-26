@@ -66,37 +66,37 @@ class Api {
       });
   }
 
-  setLike(cardId) {
-    return fetch(
-      `${this._initUrlApi}/cards/${cardId}/likes`,
-      {
-        credentials: 'include',
-        method: 'PUT',
-        headers: {
-          'Content-Type': this._contentType,
-        },
-      },
-    )
-      .then(this._answerHandle);
-  }
+  // setLike(cardId) {
+  //   return fetch(
+  //     `${this._initUrlApi}/cards/${cardId}/likes`,
+  //     {
+  //       credentials: 'include',
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': this._contentType,
+  //       },
+  //     },
+  //   )
+  //     .then(this._answerHandle);
+  // }
 
-  deleteLike(cardId) {
-    return fetch(
-      `${this._initUrlApi}/cards/${cardId}/likes`,
-      {
-        credentials: 'include',
-        method: 'DELETE',
-        headers: {
-          'Content-Type': this._contentType,
-        },
-      },
-    )
-      .then(this._answerHandle);
-  }
+  // deleteLike(cardId) {
+  //   return fetch(
+  //     `${this._initUrlApi}/cards/${cardId}/likes`,
+  //     {
+  //       credentials: 'include',
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': this._contentType,
+  //       },
+  //     },
+  //   )
+  //     .then(this._answerHandle);
+  // }
 
-  changeLikeCardStatus(cardId, isLiked) {
-    return isLiked ? this.setLike(cardId) : this.deleteLike(cardId);
-  }
+  // changeLikeCardStatus(cardId, isLiked) {
+  //   return isLiked ? this.setLike(cardId) : this.deleteLike(cardId);
+  // }
 
   //---------------------
 
@@ -136,23 +136,6 @@ class Api {
         headers: {
           'Content-Type': this._contentType,
         },
-      },
-    )
-      .then(this._answerHandle);
-  }
-
-  setAvatar(link) {
-    return fetch(
-      `${this._initUrlApi}/users/me/avatar`,
-      {
-        credentials: 'include',
-        method: 'PATCH',
-        headers: {
-          'Content-Type': this._contentType,
-        },
-        body: JSON.stringify({
-          avatar: link,
-        }),
       },
     )
       .then(this._answerHandle);

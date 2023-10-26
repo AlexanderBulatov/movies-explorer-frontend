@@ -90,7 +90,7 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
                 pattern="[\-a-zA-Zа-яёА-ЯЁ ]{2,30}"
                 disabled = {!editingProfile}
                 onChange={ handleChange}
-                value={values.name}
+                value={values.name || ''}
               />
             </div>
             <span className={`error profile__error profile__error_type_name ${!isValid ? 'profile__error_show' : ''}`}>{errors.name}</span>
@@ -107,7 +107,7 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
                 disabled = {!editingProfile}
                 autoComplete="off"
                 onChange={ handleChange}
-                value={values.email}
+                value={values.email || ''}
               />
             </div>
             <span className={`error profile__error profile__error_type_name ${!isValid ? 'profile__error_show' : ''}`}>{errors.email}</span>

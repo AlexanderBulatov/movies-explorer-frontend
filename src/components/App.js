@@ -17,47 +17,51 @@ import Profile from './Profile/Profile';
 import Login from './Sign/Login/Login';
 import Register from './Sign/Register/Register';
 import ProtectedRoute from './ProtectedRout/ProtectedRout';
+import InfoToolTip from './InfoToolTip/InfoToolTip';
 // import DebugView from './SidePopup/DebugView';
 
 function App() {
   const { pathname } = useLocation();
   const [isSideMenuOpen, setSideMenuOpen] = React.useState(false);
+  const [isInfoToolTipOpen, setInfoToolTipOpen] = React.useState(false);
+  const [infoMsg, setInfoMsg] = React.useState({ isOk: true, msg: 'Все в порядке' });
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
   const [loggedIn, setLoggedIn] = React.useState(null);
-  // const [initialFilms, setinitialFilms] = React.useState([]);
-  const [filteredFilms, setFilteredFilms] = React.useState(null);
   const [storedIdLikedList, setStoredIdLikedList] = React.useState([]);
-  // const [likesInfo, setLikesInfo] = React.useState(null);
-  // const [renderPointer, setRenderPointer] = React.useState(0);
-  // const [storedFilms, setStoredFilms] = React.useState([]);
-  // const [hasMoreCards, setMoreCards] = React.useState(false);
-  // const navigate = useNavigate();
-
-  //  -------------Проверка валидности токена----------------------------------------------
-  const handleError = (err) => {
-    console.log(err);
-  };
 
   //--------------------------------------------
-  const handleDeleteFilm = (filmId) => api.deleteMovie(filmId).then(() => 'Ok')
+  const handleDeleteFilm = (filmId) => api.deleteMovie(filmId)
     .catch((err) => {
-      console.log(filmId, err);
-      return 'Bad';
+      setInfoToolTipOpen(true);
+      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Произошла ошибка при удалении: ${err}` });
+      return err;
     });
 
-  const handleSetFilm = (film) => api.setFilm(film).then((storedFilm) => ({ data: storedFilm, msg: 'Ok' }))
+  const handleSetFilm = (film) => api.setFilm(film)
     .catch((err) => {
-      console.log(err);
+      setInfoToolTipOpen(true);
+      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Произошла ошибка при отметке фильма: ${err}` });
       return { data: null, msg: 'Bad' };
     });
 
-  //--------------------------------------------
-  const handleLoadLikedFilms = () => api.getMovies().then((films) => films)
+  // ------------------------ 100 FILMS LOADING --------------------
+  const handleGetAllMovies = () => getAllMovies().then((films) => films)
     .catch((err) => {
-      console.log(err);
-      return 'Bad';
+      setInfoToolTipOpen(true);
+      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Произошла ошибка при обращении к базе фильмов: ${err}` });
+      return 'server_error';
     });
-  // ---------------------
+  // ------------------------ LIKED FILMS LOADING --------------------
+  const handleLoadLikedFilms = () => api.getMovies().then((films) => {
+    setStoredIdLikedList(films.map((film) => ({ _id: film._id, id: film.movieId })));
+    return films;
+  })
+    .catch((err) => {
+      setInfoToolTipOpen(true);
+      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Не удалось загрузить сохраненные фильмы с сервера: ${err}` });
+      return err;
+    });
+  // --------------------------------------------------------------------------------------
   const handleTokenCheck = () => {
     auth.checkToken().then((res) => {
       if (res) {
@@ -68,7 +72,11 @@ function App() {
       window.localStorage.setItem('isLoggedIn', 'false');
       return null;
     })
-      .catch(handleError);
+      .catch((err) => {
+        setInfoToolTipOpen(true);
+        setInfoMsg({ isOk: false, msg: `Возможны проблемы с авторизацией. Не удалось получить ответ сервера: ${err}`, home: true });
+        return err;
+      });
   };
   // -------------------------------------------------------------------------------------
   // .....................................................................................
@@ -78,57 +86,15 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-    api.getMovies().then((films) => {
-      setStoredIdLikedList(films.map((film) => ({ _id: film._id, id: film.movieId })));
-      return films;
-    })
-      .catch((err) => {
-        console.log(err);
-        return 'Bad';
-      });
+    // api.getMovies().then((films) => {
+    //   setStoredIdLikedList(films.map((film) => ({ _id: film._id, id: film.movieId })));
+    //   return films;
+    // })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     return 'Bad';
+    //   });
   }, []);
-
-  const handleGetAllMovies = () => getAllMovies().then((films) => {
-    console.log('получили всю базу, ', films);
-    return films;
-  })
-    .catch((err) => {
-      console.log(err);
-      return 'Bad';
-    });
-  // ---------------------
-  useEffect(() => {
-    if (window.localStorage.getItem('isLoggedIn') === 'true') {
-      handleTokenCheck();
-    }
-  }, []);
-  // ---------------------
-  const handleShortClick = (search, checkedShort) => {
-    let findDuration = 0;
-    if (checkedShort) {
-      findDuration = 60;
-    } else {
-      findDuration = 60000;
-    }
-    const { initialFilms } = JSON.parse(window.localStorage.getItem('initialUserFilms'));
-    const filteredArr = initialFilms.filter(
-      (film) => ((film.nameRU.toLowerCase()).indexOf(search.toLowerCase()) >= 0
-              || (film.nameEN.toLowerCase()).indexOf(search.toLowerCase()) >= 0)
-              && (film.duration < findDuration),
-    );
-    setFilteredFilms(filteredArr);
-    if (filteredArr.length > 0) {
-      window.localStorage.setItem('filteredUserFilms', JSON.stringify({
-        userId: currentUser._id,
-        filteredFilms: filteredArr,
-        searchExpression: search,
-        checkboxState: checkedShort,
-      }));
-    }
-  };
-  // React.useEffect(() => {
-  //   if (loggedIn) { navigate('/movies', { replace: true }); }
-  // }, [loggedIn]);
 
   return (
     <div className="page" >
@@ -144,9 +110,7 @@ function App() {
               <Movies key="movies"
                 pathname = {pathname}
                 handleGetAllMovies = {handleGetAllMovies}
-                handleShortClick = {handleShortClick}
-                filteredFilms = {filteredFilms}
-                setFilteredFilms = {setFilteredFilms}
+                handleLoadLikedFilms = {handleLoadLikedFilms}
                 storedIdLikedList = {storedIdLikedList}
                 setStoredIdLikedList = {setStoredIdLikedList}
                 handleSetFilm ={handleSetFilm}
@@ -161,9 +125,6 @@ function App() {
                 isSideMenuOpen={isSideMenuOpen}
                 isBlack={true} />,
               <Movies key="saved-movies"
-                // pathname = {pathname}
-                filteredFilms = {filteredFilms}
-                setFilteredFilms = {setFilteredFilms}
                 handleLoadLikedFilms = {handleLoadLikedFilms}
                 storedIdLikedList = {storedIdLikedList}
                 setStoredIdLikedList = {setStoredIdLikedList}
@@ -191,7 +152,6 @@ function App() {
           <Route path="/signup" element={[
             <Register key="register" />]}
           />
-          {/* <Route path="*" element={<Page404 />} /> */}
           <Route path="/page-404" element={<Page404 />} />
           <Route path="/" element={[
             <Header key="header"
@@ -205,7 +165,14 @@ function App() {
           <Route path="*" element={<Navigate to="/page-404" replace />} />
         </Routes>
 
-        <SidePopup isSideMenuOpen={isSideMenuOpen} onClose={() => setSideMenuOpen(false)} />
+        <SidePopup
+          isSideMenuOpen={isSideMenuOpen}
+          onClose={() => setSideMenuOpen(false)} />
+        <InfoToolTip
+          isInfoToolTipOpen={isInfoToolTipOpen}
+          onClose={() => setInfoToolTipOpen(false)}
+          infoMsg = {infoMsg}
+          setInfoToolTipOpen = {setInfoToolTipOpen} />
         {/* <DebugView varArray={[
           { varName: 'loggedIn', varValue: `${loggedIn}` },
           { varName: 'isloggedIn', varValue: `${window.localStorage.getItem('isLoggedIn')}` },

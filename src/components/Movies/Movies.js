@@ -11,7 +11,6 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function Movies({
   handleGetAllMovies,
-  setFilteredFilms,
   handleLoadLikedFilms,
   handleSetFilm,
   handleDeleteFilm,
@@ -20,10 +19,9 @@ function Movies({
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  // const [initPageData, setInitPageData] = React.useState('');
   const [allFilmsFromAPI, setAllFilmsFromAPI] = React.useState(null);
   const [moviesList, setMoviesList] = React.useState([]);
-  const [storedLikedList, setStoredLikedList] = React.useState([]);
+  const [storedLikedList, setStoredLikedList] = React.useState(null);
   const [searchSettings, setSearchSettings] = React.useState({ search: '', checked: false });
   const [resultStatus, setResultStatus] = React.useState('init');
   const [isLoading, setIsLoading] = React.useState(false);
@@ -41,7 +39,7 @@ function Movies({
     setIsLoading(true);
     if (allFilmsFromAPI === null) {
       handleGetAllMovies().then((res) => {
-        if (res !== 'Bad') {
+        if (res !== 'server_error') {
           window.localStorage.setItem('initialUserFilms', JSON.stringify({ userId: currentUser._id, initialFilms: res }));
           setAllFilmsFromAPI({ userId: currentUser._id, initialFilms: res });
           storeAndShowSearchRes(res, search, checkedShort);
@@ -73,15 +71,13 @@ function Movies({
   }
 
   useEffect(() => {
+    if (storedLikedList === null) {
+      handleLoadLikedFilms().then((res) => {
+        if (pathname === '/saved-movies') setMoviesList(res);
+        setStoredLikedList(res);
+      });
+    }
 
-  }, [allFilmsFromAPI]);
-
-  useEffect(() => () => {
-    setMoviesList([]);
-    setFilteredFilms(null);
-  }, []);
-
-  useEffect(() => {
     if (pathname === '/movies') {
       const initData = JSON.parse(window.localStorage.getItem('filteredUserFilms'));
       if (initData !== null && initData.userId === currentUser._id) {
@@ -95,15 +91,15 @@ function Movies({
       if (initialUserFilms !== null && initialUserFilms.userId === currentUser._id) {
         setAllFilmsFromAPI(initialUserFilms);
       }
-    } else {
-      // ----------- ЗАГРУЗКА ПОНРАВИВШИХСЯ КАРТОЧЕК
-      handleLoadLikedFilms().then((res) => {
-        if (res !== 'Bad') {
-          setMoviesList(res);
-          setStoredLikedList(res);
-        }
-      });
     }
+    // if (pathname === '/saved-movies') {
+    //   if (storedLikedList === null) {
+    //     handleLoadLikedFilms().then((res) => {
+    //       setMoviesList(res);
+    //       setStoredLikedList(res);
+    //     });
+    //   } else setMoviesList(storedLikedList);
+    // }
   }, [pathname]);
 
   return (

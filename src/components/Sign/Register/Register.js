@@ -17,7 +17,6 @@ function Registr() {
   function handleSubmit(e) {
     resetForm();
     setValues({ name: values.name, email: values.email });
-    console.log(values);
     e.preventDefault();
     auth.register(values.name, values.email, values.pass)
       .then(() => {
@@ -72,7 +71,7 @@ function Registr() {
               required
               pattern="[\-a-zA-Zа-яёА-ЯЁ ]{2,30}"
               onChange={handleChange}
-              value={values.name}
+              value={values.name || ''}
             />
             <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}> {errors.name}
             </span>
@@ -87,7 +86,7 @@ function Registr() {
               required
               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
               onChange={handleChange}
-              value={values.email}/>
+              value={values.email || ''}/>
             <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.email}
             </span>
             <label className="sign__label">Пароль</label>
@@ -102,7 +101,7 @@ function Registr() {
               minLength="2"
               maxLength="200"
               onChange={handleChange}
-              value={values.pass}/>
+              value={values.pass || ''}/>
             <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.pass}</span>
             <span className= {`error sign__submit-err ${!(submitErrorMessage === '') ? 'sign__submit-err_show' : ''}`}>{submitErrorMessage}</span>
             <button type="submit" className= {`page-bttn sign__submit-bttn ${!isValid ? 'sign__submit-bttn_disabled' : ''}`}>Зарегистрироваться</button>
