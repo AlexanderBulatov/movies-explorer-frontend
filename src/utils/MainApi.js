@@ -1,5 +1,6 @@
+import CustomError from './error/error';
+
 const { REACT_APP_BASE_URL, REACT_APP_COVER_URL } = require('./config');
-const CustomError = require('./error/error');
 
 class Api {
   constructor(apiConfig) {

@@ -1,6 +1,5 @@
 import { REACT_APP_MOVIES_API_URL } from './config';
-
-const CustomError = require('./error/error');
+import CustomError from './error/error';
 
 export default function getAllMovies() {
   return fetch(
