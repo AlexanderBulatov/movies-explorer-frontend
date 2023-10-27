@@ -19,28 +19,34 @@ function MoviesCardList({
 
   // ----------handleDeleteFilm-------------------
   function handleDeleteRenderedItem(film) {
-    handleDeleteFilm(film._id).then(() => {
-      setMoviesList((state) => state.filter(
-        (moviesFromState) => moviesFromState._id !== film._id,
-      ));
-      setFilmsForRender(moviesList);
-      setStoredIdLikedList((state) => state.filter(
-        (filmIdFromState) => filmIdFromState._id !== film._id,
-      ));
+    handleDeleteFilm(film._id).then((res) => {
+      if (res !== 'gotError') {
+        setMoviesList((state) => state.filter(
+          (moviesFromState) => moviesFromState._id !== film._id,
+        ));
+        setFilmsForRender(moviesList);
+        setStoredIdLikedList((state) => state.filter(
+          (filmIdFromState) => filmIdFromState._id !== film._id,
+        ));
+      }
     });
   }
   // ----------handleDelete-LikeFilm-------------------
   function handleLikeFilm(isLiked, film) {
     if (!isLiked) {
       handleSetFilm(film).then((res) => {
-        setStoredIdLikedList([{ _id: res._id, id: res.movieId }, ...storedIdLikedList]);
+        if (res !== 'gotError') {
+          setStoredIdLikedList([{ _id: res._id, id: res.movieId }, ...storedIdLikedList]);
+        }
       });
     } else {
       const [filmForDelete] = storedIdLikedList.filter((filmId) => filmId.id === film.id);
-      handleDeleteFilm(filmForDelete._id).then(() => {
-        setStoredIdLikedList((state) => state.filter(
-          (filmIdFromState) => filmIdFromState.id !== film.id,
-        ));
+      handleDeleteFilm(filmForDelete._id).then((res) => {
+        if (res !== 'gotError') {
+          setStoredIdLikedList((state) => state.filter(
+            (filmIdFromState) => filmIdFromState.id !== film.id,
+          ));
+        }
       });
     }
   }

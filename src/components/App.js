@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  Route, Routes, Navigate, useLocation,
+  Route, Routes, Navigate, useLocation, useNavigate,
   // Route, Routes,
 } from 'react-router-dom';
 import * as auth from '../utils/auth';
@@ -22,63 +22,85 @@ import InfoToolTip from './InfoToolTip/InfoToolTip';
 
 function App() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [isSideMenuOpen, setSideMenuOpen] = React.useState(false);
   const [isInfoToolTipOpen, setInfoToolTipOpen] = React.useState(false);
-  const [infoMsg, setInfoMsg] = React.useState({ isOk: true, msg: 'Все в порядке' });
+  const [infoMsg, setInfoMsg] = React.useState({ isOk: true, msg: 'Все в порядке', handleCloseAction: null });
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
   const [loggedIn, setLoggedIn] = React.useState(null);
   const [storedIdLikedList, setStoredIdLikedList] = React.useState([]);
 
   //--------------------------------------------
-  const handleDeleteFilm = (filmId) => api.deleteMovie(filmId)
-    .catch((err) => {
-      setInfoToolTipOpen(true);
-      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Произошла ошибка при удалении: ${err}` });
-      return err;
+  const clearStorageItems = () => {
+    window.localStorage.removeItem('isLoggedIn');
+    window.localStorage.removeItem('initialUserFilms');
+    window.localStorage.removeItem('filteredUserFilms');
+  };
+
+  const showInfoToolTip = (isOk, msg, doAfterClosePopup) => {
+    setInfoToolTipOpen(true);
+    setInfoMsg({
+      isOk,
+      msg,
+      handleCloseAction: doAfterClosePopup,
     });
+  };
+  const showErrorAPI = (err) => {
+    const { statusCode = null, message } = err;
+    if (statusCode === 401) {
+      setLoggedIn(false);
+      clearStorageItems();
+      showInfoToolTip(false, 'Ошибка авторизации', () => navigate('/', { replace: true }));
+      return 'gotError';
+    }
+    if (statusCode !== null) {
+      showInfoToolTip(false, `${message}`);
+      return 'gotError';
+    }
+    showInfoToolTip(false, 'Ошибка при попытке запроса данных сервера. Проверьте связь с Internet');
+    return 'gotError';
+  };
+
+  const handleDeleteFilm = (filmId) => api.deleteMovie(filmId)
+    .catch((err) => showErrorAPI(err));
 
   const handleSetFilm = (film) => api.setFilm(film)
-    .catch((err) => {
-      setInfoToolTipOpen(true);
-      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Произошла ошибка при отметке фильма: ${err}` });
-      return { data: null, msg: 'Bad' };
-    });
-
+    .catch((err) => showErrorAPI(err));
   // ------------------------ 100 FILMS LOADING --------------------
   const handleGetAllMovies = () => getAllMovies().then((films) => films)
-    .catch((err) => {
-      setInfoToolTipOpen(true);
-      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Произошла ошибка при обращении к базе фильмов: ${err}` });
-      return 'server_error';
-    });
+    .catch((err) => showErrorAPI(err));
   // ------------------------ LIKED FILMS LOADING --------------------
   const handleLoadLikedFilms = () => api.getMovies().then((films) => {
     setStoredIdLikedList(films.map((film) => ({ _id: film._id, id: film.movieId })));
     return films;
   })
+    .catch((err) => showErrorAPI(err));
+
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //                                              Проверка токена (если не прошло, все обнуляем)
+  const handleTokenCheck = () => auth.checkToken().then((res) => {
+    setLoggedIn(true);
+    setCurrentUser(res);
+    return null;
+  })
     .catch((err) => {
-      setInfoToolTipOpen(true);
-      setInfoMsg({ isOk: false, msg: `Попробуйте еще раз. Не удалось загрузить сохраненные фильмы с сервера. Проверьте, что вы используете защищенное htts-соединение. ${err}` });
-      return err;
+      showErrorAPI(err);
+      navigate('/', { replace: true });
+      setLoggedIn(false);
+      window.localStorage.removeItem('isLoggedIn');
     });
-  // --------------------------------------------------------------------------------------
-  const handleTokenCheck = () => {
-    auth.checkToken().then((res) => {
-      if (res) {
-        setLoggedIn(true);
-        setCurrentUser(res);
-        return null;
-      }
-      window.localStorage.setItem('isLoggedIn', 'false');
-      return null;
-    })
-      .catch((err) => {
-        setInfoToolTipOpen(true);
-        setInfoMsg({ isOk: false, msg: `Возможны проблемы с авторизацией. Не удалось получить ответ сервера. Проверьте, что вы используете защищенное htts-соединение. ${err}`, home: true });
-        return err;
-      });
-  };
+
+  // *************************************************************************************
   // -------------------------------------------------------------------------------------
+  const handleAuthorize = (email, pass) => auth.authorize(email, pass)
+    .then((serverRes) => {
+      window.localStorage.setItem('isLoggedIn', 'true');
+      setCurrentUser(serverRes);
+      setLoggedIn(true);
+      navigate('/movies', { replace: true });
+      return '';
+    });
+
   // .....................................................................................
   useEffect(() => {
     if (window.localStorage.getItem('isLoggedIn') === 'true') {
@@ -86,14 +108,6 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-    // api.getMovies().then((films) => {
-    //   setStoredIdLikedList(films.map((film) => ({ _id: film._id, id: film.movieId })));
-    //   return films;
-    // })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     return 'Bad';
-    //   });
   }, []);
 
   return (
@@ -142,15 +156,20 @@ function App() {
               <Profile key="profile"
                 setCurrentUser = {setCurrentUser}
                 setLoggedInFalse={() => setLoggedIn(false)}
+                showErrorAPI = {showErrorAPI}
               />]} />}
           />
-          <Route path="/signin" element={[
-            <Login key="login"
-              signIn={() => setLoggedIn(true)}
-              setCurrentUser = {setCurrentUser} />]}
+          <Route path="/signin" element={
+            loggedIn ? <Navigate to="/" replace />
+              : <Login key="login"
+                signIn={() => setLoggedIn(true)}
+                setCurrentUser = {setCurrentUser}
+                handleAuthorize = {handleAuthorize}/>}
           />
-          <Route path="/signup" element={[
-            <Register key="register" />]}
+          <Route path="/signup" element={
+            loggedIn ? <Navigate to="/" replace />
+              : <Register key="register"
+                handleAuthorize = {handleAuthorize} />}
           />
           <Route path="/page-404" element={<Page404 />} />
           <Route path="/" element={[

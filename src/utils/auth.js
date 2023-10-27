@@ -1,17 +1,26 @@
 const { REACT_APP_BASE_URL } = require('./config');
+const CustomError = require('./error/error');
 
-function answerHandle(serverAnswer) {
+function answerHandleGET(serverAnswer) {
   if (serverAnswer.ok) {
     return serverAnswer.json()
       .then((res) => res.data);
-    // serverAnswer.json()
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     return res.data;
-    //   });
   }
-  return Promise.reject(new Error(`Error: ${serverAnswer.status}`));
+  return serverAnswer.json().then(
+    (res) => Promise.reject(new CustomError(serverAnswer.status, res.message)),
+  );
 }
+
+function answerHandlePOST(serverAnswer) {
+  if (serverAnswer.ok) {
+    return serverAnswer.json();
+    // .then((res) => res);
+  }
+  return serverAnswer.json().then(
+    (res) => Promise.reject(new CustomError(serverAnswer.status, res.message)),
+  );
+}
+// 00 =============================================================================================
 
 export const register = (userName, email, password) => fetch(`${REACT_APP_BASE_URL}/signup`, {
   method: 'POST',
@@ -25,16 +34,9 @@ export const register = (userName, email, password) => fetch(`${REACT_APP_BASE_U
     password,
   }),
 })
-  .then((serverAnswer) => {
-    if (serverAnswer.ok) {
-      return serverAnswer.json()
-        .then((res) => res);
-    }
-    if (serverAnswer.status === 409) {
-      return Promise.reject(new Error('Пользователь с таким email уже существует'));
-    }
-    return serverAnswer.json().then((res) => Promise.reject(new Error(`При регистрации пользователя произошла ошибка: ${res.message}`)));
-  });
+  .then(answerHandlePOST);
+
+// 01 =============================================================================================
 
 export const authorize = (email, password) => fetch(
   `${REACT_APP_BASE_URL}/signin`,
@@ -48,16 +50,9 @@ export const authorize = (email, password) => fetch(
     body: JSON.stringify({ email, password }),
   },
 )
-  .then((serverAnswer) => {
-    if (serverAnswer.ok) {
-      return serverAnswer.json()
-        .then((res) => res);
-    }
-    if (serverAnswer.status === 401) {
-      return Promise.reject(new Error('Вы ввели неправильный логин или пароль.'));
-    }
-    return serverAnswer.json().then((res) => Promise.reject(new Error(`Возникла ошибка: ${res.message}`)));
-  });
+  .then(answerHandlePOST);
+
+// 02 =============================================================================================
 
 export const signOut = () => fetch(
   `${REACT_APP_BASE_URL}/signout`,
@@ -70,7 +65,9 @@ export const signOut = () => fetch(
     },
   },
 )
-  .then(answerHandle);
+  .then(answerHandleGET);
+
+// 03 =============================================================================================
 
 export const checkToken = () => fetch(
   `${REACT_APP_BASE_URL}/users/me`,
@@ -83,10 +80,4 @@ export const checkToken = () => fetch(
     },
   },
 )
-  .then((serverAnswer) => {
-    if (serverAnswer.ok) {
-      return serverAnswer.json()
-        .then((res) => res.data);
-    }
-    return null;
-  });
+  .then(answerHandleGET);

@@ -10,7 +10,7 @@ function ProtectedRoute({ element: componentsArray, loggedIn }) {
   }
 
   return (
-    loggedIn ? componentsArray.map((component) => (component)) : <Navigate to="/signin" replace />
+    loggedIn ? componentsArray.map((component) => (component)) : <Navigate to="/" replace />
     // <DebugView varArray={[
     //   { varName: 'isloggedIn', varValue: `${window.localStorage.getItem('isLoggedIn')}` },
     //   { varName: 'loggedIn PR', varValue: `${loggedIn}` },

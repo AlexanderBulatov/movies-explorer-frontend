@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as auth from '../../../utils/auth';
 import logo from '../../../images/logo.svg';
 import useFormAndValidation from '../../../utils/customHooks/useFormAndValidation';
 
-function Login({ signIn, setCurrentUser }) {
-  const navigate = useNavigate();
+function Login({ handleAuthorize }) {
   const [submitErrorMessage, setSubmitErrorMessage] = React.useState('');
   const [wasSubmitError, setWasSubmitError] = React.useState(false);
   // const [dataInputError, setDataInputError] = React.useState({email: '', pass: ''});
@@ -18,19 +16,20 @@ function Login({ signIn, setCurrentUser }) {
   function handleSubmit(e) {
     e.preventDefault();
     resetForm();
-    setValues({ name: values.name, email: values.email });
+    setValues({ email: values.email, pass: values.pass });
     if (!values.pass || !values.email) {
       return;
     }
-    auth.authorize(values.email, values.pass)
-      .then((serverRes) => {
-        window.localStorage.setItem('isLoggedIn', 'true');
-        setCurrentUser(serverRes);
-        signIn();
-        navigate('/movies', { replace: true });
-      })
+    handleAuthorize(values.email, values.pass)
       .catch((err) => {
-        setSubmitErrorMessage(err.message);
+        const { statusCode = null, message } = err;
+        if (statusCode === 401) {
+          return setSubmitErrorMessage('Вы ввели неправильный логин или пароль');
+        }
+        if (statusCode !== null) {
+          return setSubmitErrorMessage(message);
+        }
+        return setSubmitErrorMessage('Ошибка при попытке запроса данных сервера. Проверьте связь с Internet');
       });
   }
 
@@ -112,6 +111,5 @@ export default Login;
 
 Login.propTypes = {
 
-  signIn: PropTypes.func,
-  setCurrentUser: PropTypes.func,
+  handleAuthorize: PropTypes.func,
 };

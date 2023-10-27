@@ -1,4 +1,5 @@
 const { REACT_APP_BASE_URL, REACT_APP_COVER_URL } = require('./config');
+const CustomError = require('./error/error');
 
 class Api {
   constructor(apiConfig) {
@@ -12,7 +13,9 @@ class Api {
       return serverAnswer.json()
         .then((res) => res.data);
     }
-    return Promise.reject(new Error(`Error: ${serverAnswer.status}`));
+    return serverAnswer.json().then(
+      (res) => Promise.reject(new CustomError(serverAnswer.status, res.message)),
+    );
   }
 
   getMovies() {
@@ -59,46 +62,11 @@ class Api {
           return serverAnswer.json()
             .then((res) => res.data);
         }
-        if (serverAnswer.status === 409) {
-          return Promise.reject(new Error('Пользователь с таким email уже существует'));
-        }
-        return serverAnswer.json().then((res) => Promise.reject(new Error(`При обновлении профиля произошла ошибка: ${res.message}`)));
+        return serverAnswer.json().then(
+          (res) => Promise.reject(new CustomError(serverAnswer.status, res.message)),
+        );
       });
   }
-
-  // setLike(cardId) {
-  //   return fetch(
-  //     `${this._initUrlApi}/cards/${cardId}/likes`,
-  //     {
-  //       credentials: 'include',
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': this._contentType,
-  //       },
-  //     },
-  //   )
-  //     .then(this._answerHandle);
-  // }
-
-  // deleteLike(cardId) {
-  //   return fetch(
-  //     `${this._initUrlApi}/cards/${cardId}/likes`,
-  //     {
-  //       credentials: 'include',
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Content-Type': this._contentType,
-  //       },
-  //     },
-  //   )
-  //     .then(this._answerHandle);
-  // }
-
-  // changeLikeCardStatus(cardId, isLiked) {
-  //   return isLiked ? this.setLike(cardId) : this.deleteLike(cardId);
-  // }
-
-  //---------------------
 
   setFilm(film) {
     return fetch(

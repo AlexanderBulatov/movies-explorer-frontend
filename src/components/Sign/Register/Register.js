@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import * as auth from '../../../utils/auth';
 import logo from '../../../images/logo.svg';
 import useFormAndValidation from '../../../utils/customHooks/useFormAndValidation';
 
-function Registr() {
+function Registr({ handleAuthorize }) {
   const [submitErrorMessage, setSubmitErrorMessage] = React.useState('');
   const [wasSubmitError, setWasSubmitError] = React.useState(false);
-
-  const navigate = useNavigate();
 
   const {
     values, handleChange, errors, isValid, setValues, resetForm,
@@ -16,14 +15,29 @@ function Registr() {
 
   function handleSubmit(e) {
     resetForm();
-    setValues({ name: values.name, email: values.email });
+    setValues({ name: values.name, email: values.email, pass: values.pass });
     e.preventDefault();
     auth.register(values.name, values.email, values.pass)
       .then(() => {
-        navigate('/signin', { replace: true });
+        handleAuthorize(values.email, values.pass)
+          .catch((err) => {
+            const { statusCode = null, message } = err;
+            if (statusCode === 401) {
+              return setSubmitErrorMessage('Произошла ошибка авторизации');
+            }
+            if (statusCode !== null) {
+              return setSubmitErrorMessage(message);
+            }
+            return setSubmitErrorMessage('Ошибка при попытке запроса данных сервера. Проверьте связь с Internet');
+          });
       })
       .catch((err) => {
-        setSubmitErrorMessage(err.message);
+        const { statusCode = null } = err;
+        if (statusCode === 409) {
+          setSubmitErrorMessage('Пользователь с таким email уже существует');
+          return null;
+        }
+        return setSubmitErrorMessage('При регистрации пользователя произошла ошибка');
       });
   }
 
@@ -117,3 +131,8 @@ function Registr() {
 }
 
 export default Registr;
+
+Registr.propTypes = {
+
+  handleAuthorize: PropTypes.func,
+};

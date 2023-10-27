@@ -1,5 +1,7 @@
 import { REACT_APP_MOVIES_API_URL } from './config';
 
+const CustomError = require('./error/error');
+
 export default function getAllMovies() {
   return fetch(
     `${REACT_APP_MOVIES_API_URL}`,
@@ -12,6 +14,8 @@ export default function getAllMovies() {
       if (serverAnswer.ok) {
         return serverAnswer.json();
       }
-      return null;
+      return serverAnswer.json().then(
+        (res) => Promise.reject(new CustomError(serverAnswer.status, res.message)),
+      );
     });
 }

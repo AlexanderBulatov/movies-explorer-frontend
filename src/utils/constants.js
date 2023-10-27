@@ -1,0 +1,9 @@
+export const SMALL_SCREEN_W_PX = 600;
+export const INITIAL_CARDS_FOR_SMALL = 5;
+export const RENDER_CARDS_FOR_SMALL = 2;
+export const MEDIUM_SCREEN_W_PX = 900;
+export const INITIAL_CARDS_FOR_MEDIUM = 8;
+export const RENDER_CARDS_FOR_MEDIUM = 2;
+export const INITIAL_CARDS_FOR_WIDE = 12;
+export const RENDER_CARDS_FOR_WIDE = 3;
+export const SHORT_FILM_MIN = 40;

@@ -7,12 +7,13 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 // import DebugView from '../SidePopup/DebugView';
 import useFormAndValidation from '../../utils/customHooks/useFormAndValidation';
 
-function Profile({ setLoggedInFalse, setCurrentUser }) {
+function Profile({ setLoggedInFalse, setCurrentUser, showErrorAPI }) {
   const navigate = useNavigate();
   const currentUser = React.useContext(CurrentUserContext);
   const [editingProfile, setEditingProfile] = React.useState(false);
   const [submitMessage, setSubmitMessage] = React.useState('');
-  // const [wasSubmit, setWasSubmit] = React.useState(false);
+  const SAME_DATA_MSG = 'Данные не были обновлены, т.к. не отличаются от данных текущего пользователя';
+  const UPDATE_DATA_MSG = 'Данные успешно обновлены';
 
   const {
     values, handleChange, errors, isValid, setValues, resetForm,
@@ -24,51 +25,68 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
   }, []);
 
   function handleSignOut() {
+    setLoggedInFalse();
+    window.localStorage.removeItem('isLoggedIn');
+    window.localStorage.removeItem('initialUserFilms');
+    window.localStorage.removeItem('filteredUserFilms');
+    navigate('/', { replace: true });
     auth.signOut().then(() => {
-      setLoggedInFalse();
-      window.localStorage.setItem('isLoggedIn', 'false');
-      localStorage.removeItem('jwtMovie');
-      navigate('/', { replace: true });
     })
       .catch((err) => {
-        console.log('Logout error', err);
+        showErrorAPI(err);
       });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    resetForm();
-    setValues({ name: values.name, email: values.email });
-    api.updateUserInfo(values.name, values.email)
-      .then(() => {
-        setCurrentUser({ name: values.name, email: values.email });
-        setSubmitMessage('Данные успешно обновлены');
-        // setTimeout(() => {
-        //   setEditingProfile(false);
-        // }, 10000);
-      })
-      .catch((err) => {
-        setSubmitMessage(err.message);
-      });
+    if (isValid) {
+      resetForm();
+      setValues({ name: values.name, email: values.email });
+      api.updateUserInfo(values.name, values.email)
+        .then(() => {
+          setCurrentUser({ name: values.name, email: values.email });
+          setSubmitMessage(UPDATE_DATA_MSG);
+        })
+        .catch((err) => {
+          const { statusCode = null } = err;
+          if (statusCode === 409) {
+            setSubmitMessage('Пользователь с таким email уже существует');
+            return null;
+          }
+          return setSubmitMessage('При обновлении профиля произошла ошибка');
+        });
+    } else setSubmitMessage(SAME_DATA_MSG);
   }
+  useEffect(() => {
+    if (submitMessage === SAME_DATA_MSG) {
+      setSubmitMessage('');
+    }
+  }, [values]);
 
   useEffect(() => {
-    // if (submitMessage === 'Данные успешно обновлены') {
-    setTimeout(() => {
-      setEditingProfile(false);
-    }, 2500);
+    if (submitMessage !== SAME_DATA_MSG && submitMessage !== '') {
+      setTimeout(() => {
+        setEditingProfile(false);
+      }, 2500);
+    }
+  }, [submitMessage]);
+
+  useEffect(() => {
+    if (!editingProfile) setSubmitMessage('');
+  }, [editingProfile]);
+
+  useEffect(() => {
+    // setWasSubmit(false);
+    // setTimeout(() => {
+    //   setEditingProfile(false);
+    // }, 2500);
     // }
     // if (submitMessage !== '') { setWasSubmit(true); }
   }, [submitMessage]);
 
-  // useEffect(() => {
-  //   if (wasSubmit) { setSubmitMessage(''); setWasSubmit(false); }
-  // }, [values]);
-
   useEffect(() => {
     setSubmitMessage('');
     setValues({ name: currentUser.name, email: currentUser.email });
-    // setWasSubmit(false);
   }, [editingProfile]);
 
   return (
@@ -111,13 +129,7 @@ function Profile({ setLoggedInFalse, setCurrentUser }) {
               />
             </div>
             <span className={`error profile__error profile__error_type_name ${!isValid ? 'profile__error_show' : ''}`}>{errors.email}</span>
-
-            {/* {submitErrorMessage !== ''
-              && <span className={`profile__save-error profile__error_type_save
-              ${submitErrorMessage !== '' ? 'profile__save-error_show' : ''}`}>
-                {submitErrorMessage}
-              </span>} */}
-               <span className={`error profile__save-error ${(submitMessage !== '') ? 'profile__save-error_show' : ''}`}>
+               <span className={`error profile__save-error ${(submitMessage !== SAME_DATA_MSG && submitMessage !== '') ? 'profile__save-error_show' : ''}`}>
                 {'Возврат через 3 секунды...'}
               </span>
                <span className={`error profile__save-error ${(submitMessage !== '') ? 'profile__save-error_show' : ''}`}>
@@ -153,4 +165,5 @@ export default Profile;
 Profile.propTypes = {
   setLoggedInFalse: PropTypes.func,
   setCurrentUser: PropTypes.func,
+  showErrorAPI: PropTypes.func,
 };

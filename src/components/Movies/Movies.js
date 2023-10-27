@@ -39,7 +39,7 @@ function Movies({
     setIsLoading(true);
     if (allFilmsFromAPI === null) {
       handleGetAllMovies().then((res) => {
-        if (res !== 'server_error') {
+        if (res !== 'gotError') {
           window.localStorage.setItem('initialUserFilms', JSON.stringify({ userId: currentUser._id, initialFilms: res }));
           setAllFilmsFromAPI({ userId: currentUser._id, initialFilms: res });
           storeAndShowSearchRes(res, search, checkedShort);
@@ -73,8 +73,10 @@ function Movies({
   useEffect(() => {
     if (storedLikedList === null) {
       handleLoadLikedFilms().then((res) => {
-        if (pathname === '/saved-movies') setMoviesList(res);
-        setStoredLikedList(res);
+        if (res !== 'gotError') {
+          if (pathname === '/saved-movies') setMoviesList(res);
+          setStoredLikedList(res);
+        }
       });
     }
 
@@ -92,14 +94,6 @@ function Movies({
         setAllFilmsFromAPI(initialUserFilms);
       }
     }
-    // if (pathname === '/saved-movies') {
-    //   if (storedLikedList === null) {
-    //     handleLoadLikedFilms().then((res) => {
-    //       setMoviesList(res);
-    //       setStoredLikedList(res);
-    //     });
-    //   } else setMoviesList(storedLikedList);
-    // }
   }, [pathname]);
 
   return (
