@@ -64,6 +64,7 @@
   transition: opacity 0.2s;
   margin: 30px 0 80px 0;
   cursor: pointer;
+  visibility: visible;
 
 }
 @media screen and (max-width: 850px) {
@@ -78,4 +79,8 @@
 }
 .movies__more-bttn:hover {
   opacity: 0.8;
+}
+
+.movies__more-bttn_hidden {
+  visibility: hidden;
 }

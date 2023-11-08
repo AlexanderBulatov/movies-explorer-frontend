@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .search__bar {
   background-color: #2F2F2F;
   min-height: 46px;
@@ -37,6 +38,9 @@
   border-radius: 40px;
 
   outline: 1px #3ddc84 solid;
+}
+.search__input::placeholder{
+  color: #4b7e08;
 }
 
 .search-bttn {

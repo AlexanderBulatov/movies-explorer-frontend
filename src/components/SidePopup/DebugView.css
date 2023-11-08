@@ -1,0 +1,57 @@
+.debug-popup {
+  /* width: 500px;
+  height: 500px; */
+  width: 30%;
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', Arial, sans-serif;
+  /* justify-content: center; */
+  align-items: center;
+  position: fixed;
+
+  left: 0;
+  top: 50%;
+  /* right: 0;
+  bottom: 0; */
+  z-index: 999;
+  background-color: rgba(0,0,0,.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 0.3s ease-in, left 0.3s ease-in-out;
+}
+
+.debug-popup_opened {
+
+  opacity: 1;
+  visibility: visible;
+
+
+}
+
+
+/* .popup_opened .popup__content {
+  opacity: 1;
+  visibility: visible;
+  width: 67.7%;
+} */
+
+.debug-popup__content {
+  margin-left: auto;
+  /* min-width: 520px; */
+  /* width: calc(768% / 520%); */
+
+  width: 100%;
+  /* flex-grow: 1; */
+  /* height: 100%; */
+  background-color: rgba(12, 63, 54, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s ease-in; */
+  transition: width 0.3s ease-in;
+}

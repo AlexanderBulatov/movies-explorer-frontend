@@ -155,6 +155,9 @@
   cursor: pointer;
   visibility: hidden;
 }
+.movie-bttn_show {
+  visibility: visible;
+}
 .movie:hover .movie-bttn {
   /* cursor: pointer; */
   visibility: visible;
@@ -190,6 +193,7 @@
   background: url(../../../images/save-active.svg);
   background-repeat: no-repeat;
   background-position: center;
+  visibility: visible;
 }
 
 .movie__remove {

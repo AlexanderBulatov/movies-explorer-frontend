@@ -1,8 +1,61 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import * as auth from '../../../utils/auth';
 import logo from '../../../images/logo.svg';
+import useFormAndValidation from '../../../utils/customHooks/useFormAndValidation';
 
-function Registr() {
+function Registr({ handleAuthorize }) {
+  const [submitErrorMessage, setSubmitErrorMessage] = React.useState('');
+  const [wasSubmitError, setWasSubmitError] = React.useState(false);
+
+  const {
+    values, handleChange, errors, isValid, setValues, resetForm,
+  } = useFormAndValidation(null);
+
+  function handleSubmit(e) {
+    resetForm();
+    setValues({ name: values.name, email: values.email, pass: values.pass });
+    e.preventDefault();
+    auth.register(values.name, values.email, values.pass)
+      .then(() => {
+        handleAuthorize(values.email, values.pass)
+          .catch((err) => {
+            const { statusCode = null, message } = err;
+            if (statusCode === 401) {
+              return setSubmitErrorMessage('Произошла ошибка авторизации');
+            }
+            if (statusCode !== null) {
+              return setSubmitErrorMessage(message);
+            }
+            return setSubmitErrorMessage('Ошибка при попытке запроса данных сервера. Проверьте связь с Internet');
+          });
+      })
+      .catch((err) => {
+        const { statusCode = null } = err;
+        if (statusCode === 409) {
+          setSubmitErrorMessage('Пользователь с таким email уже существует');
+          return null;
+        }
+        return setSubmitErrorMessage('При регистрации пользователя произошла ошибка');
+      });
+  }
+
+  useEffect(() => {
+    if ((submitErrorMessage !== '')) {
+      setWasSubmitError(true);
+    }
+  }, [submitErrorMessage]);
+
+  useEffect(() => {
+    if (wasSubmitError) setSubmitErrorMessage('');
+  }, [values]);
+
+  useEffect(() => {
+    resetForm();
+    setValues({ name: '', email: '', pass: '' });
+  }, []);
+
   return (
     <main className="page__content">
       <section className="sign page__partition page__partition_grow page__partition_color_black">
@@ -15,19 +68,26 @@ function Registr() {
             />
           </Link>
           <h1 className="page-title sign__title">Добро пожаловать!</h1>
-          <form className="sign__form" name="registr-form" >
+          <form
+            className="sign__form"
+            name="registr-form"
+            autoComplete="off"
+            noValidate
+            onSubmit={handleSubmit}>
             <label className="sign__label">Имя</label>
             <input
               id="name"
               type="text"
               name="name"
               placeholder="Ваше имя"
+              autoComplete="off"
               className="sign__input sign__input_type_name"
               required
               pattern="[\-a-zA-Zа-яёА-ЯЁ ]{2,30}"
+              onChange={handleChange}
+              value={values.name || ''}
             />
-            <span className="error sign__error sign__error_type_name
-                ">Имя должно быть от 2 до 200 симоволов
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}> {errors.name}
             </span>
             <label className="sign__label">E-mail</label>
             <input
@@ -35,11 +95,13 @@ function Registr() {
               type="email"
               name="email"
               placeholder="Ваш Email"
+              autoComplete="off"
               className="sign__input sign__input_type_email"
               required
               pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
-            />
-            <span className="error sign__error sign__error_type_email">Укажите электронну почту
+              onChange={handleChange}
+              value={values.email || ''}/>
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.email}
             </span>
             <label className="sign__label">Пароль</label>
             <input
@@ -47,18 +109,20 @@ function Registr() {
               type="password"
               name="pass"
               placeholder="Введите пароль"
+              autoComplete="off"
               className="sign__input sign__input_type_pass"
               required
               minLength="2"
               maxLength="200"
-            />
-            <span className="error sign__error sign__error_type_pass
-                error_active">Что-то пошло не так...</span>
-            <button type="submit" className="page-bttn sign__submit-bttn">Зарегистрироваться</button>
+              onChange={handleChange}
+              value={values.pass || ''}/>
+            <span className={`error sign__error sign__error_type_pass ${!isValid ? 'sign__error_show' : ''}`}>{errors.pass}</span>
+            <span className= {`error sign__submit-err ${!(submitErrorMessage === '') ? 'sign__submit-err_show' : ''}`}>{submitErrorMessage}</span>
+            <button type="submit" className= {`page-bttn sign__submit-bttn ${!isValid ? 'sign__submit-bttn_disabled' : ''}`}>Зарегистрироваться</button>
           </form>
           <p className="sign__login">Уже зарегистрированы?&ensp;
             <Link to="/signin" className="link sign__link" >Войти</Link>
-          {/* <a className="sign__link" href="">Войти</a> */}
+            {/* <a className="sign__link" href="">Войти</a> */}
           </p>
         </div>
       </section>
@@ -67,3 +131,8 @@ function Registr() {
 }
 
 export default Registr;
+
+Registr.propTypes = {
+
+  handleAuthorize: PropTypes.func,
+};

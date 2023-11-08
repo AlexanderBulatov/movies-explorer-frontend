@@ -5,7 +5,7 @@ import pointer from '../../../images/pointer-ne.svg';
 function Portfolio() {
   return (
     <section className="portfolio page__partition page__partition_color_black">
-        <div className="portfolio__content page__content">
+        <div className="portfolio__content">
         <h3 className="portfolio__title">Портфолио</h3>
         <ul className="projects portfolio__projects">
           <li className='projects__sample'>

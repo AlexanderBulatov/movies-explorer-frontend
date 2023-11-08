@@ -1,46 +1,123 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
-// import SearchForm from '../SearchForm/SearchForm';
-import film00 from '../../../images/covers/00.jpg';
-import film01 from '../../../images/covers/01.jpg';
-import film02 from '../../../images/covers/02.jpg';
-// import film03 from '../../../images/covers/03.jpg';
-// import film04 from '../../../images/covers/04.jpg';
-// import film05 from '../../../images/covers/05.jpg';
-// import film06 from '../../../images/covers/06.jpg';
-// import film07 from '../../../images/covers/07.jpg';
-import film08 from '../../../images/covers/08.jpg';
-// import film09 from '../../../images/covers/09.jpg';
-// import film10 from '../../../images/covers/10.jpg';
-// import film11 from '../../../images/covers/11.jpg';
-import film2 from '../../../images/film-2.jpg';
+import renderMoviePanel from './renderMoviePanel';
+import useWindowSize from '../../../utils/customHooks/useWindowSize';
+import { REACT_APP_COVER_URL } from '../../../utils/config';
+// import DebugView from '../../SidePopup/DebugView';
 
-function MoviesCardList() {
+function MoviesCardList({
+  moviesList, setMoviesList, handleSetFilm, handleDeleteFilm, storedIdLikedList,
+  setStoredIdLikedList,
+}) {
+  const { pathname } = useLocation();
+  const [filmsForRender, setFilmsForRender] = React.useState([]);
+  const [renderPointer, setRenderPointer] = React.useState(0);
+  const [hasMoreCards, setMoreCards] = React.useState(false);
+  const INITIAL_RENDER_POINTER = 0;
+
+  // ----------handleDeleteFilm-------------------
+  function handleDeleteRenderedItem(film) {
+    handleDeleteFilm(film._id).then((res) => {
+      if (res !== 'gotError') {
+        setMoviesList((state) => state.filter(
+          (moviesFromState) => moviesFromState._id !== film._id,
+        ));
+        setFilmsForRender(moviesList);
+        setStoredIdLikedList((state) => state.filter(
+          (filmIdFromState) => filmIdFromState._id !== film._id,
+        ));
+      }
+    });
+  }
+  // ----------handleDelete-LikeFilm-------------------
+  function handleLikeFilm(isLiked, film) {
+    if (!isLiked) {
+      handleSetFilm(film).then((res) => {
+        if (res !== 'gotError') {
+          setStoredIdLikedList([{ _id: res._id, id: res.movieId }, ...storedIdLikedList]);
+        }
+      });
+    } else {
+      const [filmForDelete] = storedIdLikedList.filter((filmId) => filmId.id === film.id);
+      handleDeleteFilm(filmForDelete._id).then((res) => {
+        if (res !== 'gotError') {
+          setStoredIdLikedList((state) => state.filter(
+            (filmIdFromState) => filmIdFromState.id !== film.id,
+          ));
+        }
+      });
+    }
+  }
+
+  // --- window resizing----------------------------
+  const windowSize = useWindowSize();
+
+  useEffect(() => {
+    if (pathname === '/movies') {
+      setRenderPointer(INITIAL_RENDER_POINTER);
+      setFilmsForRender([]);
+      renderMoviePanel(
+        moviesList,
+        INITIAL_RENDER_POINTER,
+        windowSize.innerWidth,
+        setMoreCards,
+        setRenderPointer,
+        setFilmsForRender,
+      );
+    } else {
+      setFilmsForRender(moviesList);
+    }
+  }, [moviesList, pathname]);
+
+  function handleClickMore() {
+    renderMoviePanel(
+      moviesList,
+      renderPointer,
+      windowSize.innerWidth,
+      setMoreCards,
+      setRenderPointer,
+      setFilmsForRender,
+    );
+  }
+
   return (
 
     <section className = "movies__panel">
       <ul className="movies__list">
-        <MoviesCard title={'33 слова о дизайне'} duration={'1ч 45м'} cover={film00} />
-        <MoviesCard title={'Киноальманах «100 лет дизайна»'} duration={'1ч 45м'} cover={film2} />
-        <MoviesCard title={'В погоне за Бенкси'} duration={'1ч 45м'} cover={film08} />
-        <MoviesCard title={'Киноальманах «100 лет дизайна»'} duration={'1ч 45м'} cover={film01} />
-        <MoviesCard title={'В погоне за Бенкси'} duration={'1ч 45м'} cover={film02} />
-        {/* <MoviesCard title={'Бег это свобода'} duration={'1ч 45м'} cover={film04} />
-    <MoviesCard title={'Книготорговцы'} duration={'1ч 45м'} cover={film05} />
-    <MoviesCard title={'Gimme Danger: История Игги и The St...'}
-    duration={'1ч 45м'} cover={film06} /> */}
-        {/* <MoviesCard title={'Gimme Danger: История Игги и The Stooge...'}
-    duration={'1ч 45м'} cover={film07} />
-    <MoviesCard title={'Дженис: Маленькая девочка грустит'}
-    duration={'1ч 45м'} cover={film08} />
-    <MoviesCard title={'Соберись перед прыжком'} duration={'1ч 45м'} cover={film09} />
-    <MoviesCard title={'Пи Джей Харви: A dog called money'}
-    duration={'1ч 45м'} cover={film10} /> */}
+      {filmsForRender.map((film) => (
+              <MoviesCard key={film.id || film._id}
+                title={film.nameRU}
+                duration={film.duration}
+                cover={(pathname === '/saved-movies') ? `${film.image}` : `${REACT_APP_COVER_URL}${film.image.url}`}
+                trailerLink={film.trailerLink}
+                handleLikeFilm ={handleLikeFilm}
+                handleDeleteFilm = {handleDeleteRenderedItem}
+                film = {film}
+                isLiked = {(pathname === '/movies') ? storedIdLikedList.some((storedId) => storedId.id === film.id) : false}
+                // setLiked = {setLiked}
+              />
+      ))}
       </ul>
-      <button className="movies__more-bttn" type="button">Еще</button>
+      <button className={`movies__more-bttn ${!hasMoreCards ? 'movies__more-bttn_hidden' : ''}`} type="button" onClick={handleClickMore}>Еще</button>
+      {/* <DebugView varArray={[
+        { varName: 'cardListSize', varValue: `${windowSize.innerWidth}` },
+        { varName: 'windowSize.innerWidth', varValue: `${windowSize.innerWidth}` },
+        { varName: 'filmsForRender', varValue:
+        `${windowSize.innerWidth} | ${filmsForRender.length}` },
+        { varName: 'filteredFilms', varValue: `| ${moviesList}` }]} /> */}
     </section>
-
   );
 }
 
 export default MoviesCardList;
+
+MoviesCardList.propTypes = {
+  moviesList: PropTypes.array,
+  handleSetFilm: PropTypes.func,
+  handleDeleteFilm: PropTypes.func,
+  setMoviesList: PropTypes.func,
+  storedIdLikedList: PropTypes.array,
+  setStoredIdLikedList: PropTypes.func,
+};

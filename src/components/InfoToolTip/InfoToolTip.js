@@ -1,26 +1,29 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+// import { Link, useLocation } from 'react-router-dom';
 
 import allRight from '../../images/icon-ok.svg';
 import somethinWrong from '../../images/icon-error.svg';
 
-function InfoToolTip() {
-  const [isInfoToolTipOpen, setInfoToolTipOpen] = React.useState(true);
-
-  const isOk = true;
+function InfoToolTip({ isInfoToolTipOpen, infoMsg, setInfoToolTipOpen }) {
+  // const { pathname } = useLocation();
   return (
 
     <div className={`info-tooltip ${isInfoToolTipOpen && 'info-tooltip_opened'}`}>
       <div className="info-tooltip__content">
         <div className="info-tooltip__close-bttn">
-          <button className="close-button" type="button" onClick={() => setInfoToolTipOpen(false)}>
+          <button className="close-button" type="button"
+            onClick={() => {
+              setInfoToolTipOpen(false);
+              if (infoMsg.handleCloseAction) infoMsg.handleCloseAction();
+            }}>
             <span className="close-button__line"></span>
           </button>
         </div>
 
-        <img src={isOk ? allRight : somethinWrong} alt="инфографика" className="info-tooltip__icon" />
+        <img src={infoMsg.isOk ? allRight : somethinWrong} alt="инфографика" className="info-tooltip__icon" />
         <h2 className="info-tooltip__title">
-          {`${isOk ? 'Тест InfoToolTip (успешное сообщение). Нажмите крестик' : 'Что-то пошло не так! Попробуйте еще раз.'}`}
+          {infoMsg.msg}
         </h2>
       </div>
     </div>
@@ -28,6 +31,8 @@ function InfoToolTip() {
 }
 
 export default InfoToolTip;
-// InfoToolTip.propTypes = {
-//   isInfoToolTipOpen: PropTypes.bool.isRequired,
-// };
+InfoToolTip.propTypes = {
+  isInfoToolTipOpen: PropTypes.bool,
+  infoMsg: PropTypes.object,
+  setInfoToolTipOpen: PropTypes.func,
+};

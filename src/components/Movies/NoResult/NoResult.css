@@ -1,0 +1,49 @@
+.movies__no-result{
+  margin: 0 auto;
+  max-width: 1140px;
+  width: calc(100% - 70px * 2);
+  text-align: center;
+}
+
+@media screen and (max-width: 850px) {
+  .movies__no-result {
+    max-width: 710px;
+    width: calc(100% - 30px * 2);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .movies__no-result {
+    max-width: 390px;
+    width: calc(100% - 10px * 2);
+
+  }
+}
+
+.no-result_hidden {
+  display:none;
+}
+.no-result__message{
+  padding-top: 22px;
+  color: #d6da08;
+  font-family: 'Inter', Arial, sans-serif;
+  text-align: center;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 850px) {
+  .no-result__message {
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .no-result__message {
+    font-weight: 500;
+    font-size: 10px;
+
+  }
+}

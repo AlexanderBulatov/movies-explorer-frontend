@@ -18,13 +18,13 @@ function SidePopup({ isSideMenuOpen, onClose }) {
 
         <nav className="side-popup__menu">
           <ul className="side-popup__links">
-            <li><NavLink to="/" className={menuLinkClassName}>Главная</NavLink></li>
-            <li><NavLink to="/movies" className={menuLinkClassName}>Фильмы</NavLink></li>
-            <li><NavLink to="/saved-movies" className={menuLinkClassName}>Сохраненные фильмы</NavLink></li>
+            <li><NavLink to="/" className={menuLinkClassName} onClick={onClose} >Главная</NavLink></li>
+            <li><NavLink to="/movies" className={menuLinkClassName} onClick={onClose} >Фильмы</NavLink></li>
+            <li><NavLink to="/saved-movies" className={menuLinkClassName} onClick={onClose} >Сохраненные фильмы</NavLink></li>
           </ul>
         </nav>
 
-        <Link to="/profile" className="profile-bttn side-popup__profile-bttn" >Аккаунт
+        <Link to="/profile" className="profile-bttn side-popup__profile-bttn" onClick={onClose}>Аккаунт
           <img
             src={accountImg}
             alt="Пиктограмма аккаунта"
@@ -37,6 +37,6 @@ function SidePopup({ isSideMenuOpen, onClose }) {
 
 export default SidePopup;
 SidePopup.propTypes = {
-  isSideMenuOpen: PropTypes.bool.isRequired,
+  isSideMenuOpen: PropTypes.bool,
   onClose: PropTypes.func,
 };

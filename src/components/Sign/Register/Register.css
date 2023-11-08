@@ -74,9 +74,9 @@
 .sign__input:invalid:not(:placeholder-shown) {
   outline: 1px rgb(180, 11, 96) solid;
 }
-.sign__input:invalid:not(:placeholder-shown) + .error {
+/* .sign__input:invalid:not(:placeholder-shown) + .error {
   opacity: 1;
-}
+} */
 
 
 
@@ -93,17 +93,17 @@
   padding: 0;
   opacity: 0;
 }
-/* temprory css for Stage 3 Diploma, view control layout
-It will be custom validation on stage 4*/
 
-input:invalid ~ .sign__submit-bttn {
+.sign__error_show {
+  opacity: 1;
+}
+.sign__submit-bttn_disabled {
   color: #c2c2c2;
   background-color: #f8f8f8;
   border: 1px solid #000000;
   border-radius: 2px;
   pointer-events: none;
 }
-
 
 @media screen and (max-width: 450px)  {
   .sign__submit-bttn {
@@ -139,4 +139,28 @@ input:invalid ~ .sign__submit-bttn {
     font-size: 12px;
     line-height: 15px;
   }
+}
+
+
+.sign__submit-err {
+  border: none;
+  padding: 0;
+  margin: auto 0 0 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  text-align: center;
+  justify-self: flex-end;
+  font-size: 11px;
+  line-height: 13px;
+  padding-bottom: 20px;
+  flex-grow: 1;
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.sign__submit-err_show {
+  opacity: 1;
+
 }
